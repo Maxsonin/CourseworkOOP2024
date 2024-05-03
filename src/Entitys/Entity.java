@@ -1,24 +1,40 @@
+// Base Entity class which sets main properties for every entity in the Game
+
 package Entitys;
 
 import java.awt.*;
-import utils.Point;
+import java.awt.image.BufferedImage;
+
+import Utils.Loader;
+import Utils.Vector2;
 
 public abstract class Entity {
+    // Positioning
     protected double velocity;
+    protected Vector2<Double> position;
 
-    protected Point<Double> position;
+    // Image
+    protected String filePath; // from resources folder
+    protected BufferedImage img;
+    protected double scaleFactor;
 
-    public Entity(Point<Double> position) {
-        this.position = position;
+    public void initializeEntityImgSettings(String filePath, int ScaleFactor) {
+        this.filePath = filePath; this.scaleFactor = ScaleFactor;
+        img = Loader.GetSprite(filePath);
     }
 
-    public void InitializeStats(double velocity) {
-        this.velocity = velocity;
+    public Dimension getImgSize() { return new Dimension(img.getWidth(), img.getHeight()); }
+    public Vector2<Double> getPosition() { return position; }
+    public double getVelocity() { return velocity; }
+    public double getScaleFactor() { return scaleFactor; }
+
+    public void drawImg(Graphics g) {
+        double scaledWidth = img.getWidth() * scaleFactor;
+        double scaledHeight = img.getHeight() * scaleFactor;
+        g.drawImage(img, (int)(position.getX() - 0), (int)(position.getY() - 0), (int)scaledWidth, (int)scaledHeight, null);
     }
 
-    public abstract void Move();
-
-    public abstract void Draw(Graphics g);
-
-    public abstract void Update();
+    public abstract void move();
+    public abstract void update();
+    public abstract void draw(Graphics g);
 }

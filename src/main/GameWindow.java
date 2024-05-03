@@ -1,6 +1,6 @@
 package main;
 
-import map.Map;
+import Map.Map;
 
 import javax.swing.*;
 import java.awt.*;

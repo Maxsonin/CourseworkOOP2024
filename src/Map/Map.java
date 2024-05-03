@@ -1,7 +1,7 @@
-package map;
+package Map;
 
-import utils.Loader;
-import utils.Point;
+import Utils.Loader;
+import Utils.Vector2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,10 +10,10 @@ import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
 
 public class Map {
-    private static final String MAP_IMG = "map.png";
-    private final Point<Integer> imgSize = new Point<>(3348, 1912);
+    private static final String MAP_IMG = "Map.png";
+    private final Vector2<Integer> imgSize = new Vector2<>(3348, 1912);
 
-    private Point<Integer> viewPos = new Point<>(0, 0);
+    private Vector2<Integer> viewPos = new Vector2<>(0, 0);
     private double scalePercentage = 1;
     private final int amountOfDisplacement = 100;
 
@@ -28,7 +28,7 @@ public class Map {
     public int GetAmountOfDisplacement() { return amountOfDisplacement; }
 
     public void setScalePercentage(double scalePercentage) {
-        viewPos = new Point<>(0, 0);
+        viewPos = new Vector2<>(0, 0);
         this.scalePercentage = scalePercentage;
     }
     public double getScalePercentage() { return scalePercentage; }
@@ -43,7 +43,7 @@ public class Map {
         subImage.flush();
     }
 
-    public Point<Integer> GetView() { return viewPos; }
+    public Vector2<Integer> GetView() { return viewPos; }
 
     public void moveViewDown(int amount) {
         int newY = viewPos.getY() + amount;

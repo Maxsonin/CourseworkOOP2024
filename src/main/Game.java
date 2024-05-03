@@ -1,74 +1,38 @@
 package main;
 
-import Bases.NaziBase;
-import map.Map;
-import utils.Point;
-
-import java.awt.*;
-
 public class Game implements Runnable {
+    // Window Settings
     private GameWindow gameWindow;
     private GamePanel gamePanel;
 
-    private Thread gameThread;
-
+    // FPS and UPS Settings
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
+    private Thread gameThread;
 
+    // Window Settings
     public final static int GAME_WIDTH = 1675;
     public final static int GAME_HEIGHT = 956;
 
-    private Map map;
-
-    NaziBase naziBaseVinnitsa;
-    NaziBase naziBaseKrasnohrad;
-    NaziBase naziBaseYalta;
-
-    public Map GetMap() {
-        return map;
-    }
+    // Game Word Settings
+    GameWorld gameWorld;
 
     public Game() {
-        InitClasses();
+        gameWorld = new GameWorld();
 
-        gamePanel = new GamePanel(this);
-        gameWindow = new GameWindow(gamePanel, map);
+        gamePanel = new GamePanel(gameWorld);
+        gameWindow = new GameWindow(gamePanel, gameWorld.getMap()); // ?????
         gamePanel.requestFocus();
 
         StartGameLoop();
     }
 
-    public void InitClasses() {
-        //map = new Map();
-        naziBaseVinnitsa = new NaziBase(map, new Point<>(200.0, 100.0));
-        naziBaseVinnitsa.InitializeBaseSettings(new Color(Color.BLUE.getRGB()), "Werwolf Nazi Base");
-
-        naziBaseKrasnohrad = new NaziBase(map, new Point<>(200.0, 350.0));
-        naziBaseKrasnohrad.InitializeBaseSettings(new Color(Color.RED.getRGB()), "Secret Nazi Base in Krasnohrad");
-
-        naziBaseYalta = new NaziBase(map, new Point<>(200.0, 550.0));
-        naziBaseYalta.InitializeBaseSettings(new Color(Color.YELLOW.getRGB()), "Yalta \"DZIDZIO\" Nazi Base");
-    }
-
     private void StartGameLoop() {
-        gameThread = new Thread(this);
-        gameThread.start();
+        gameThread = new Thread(this); gameThread.start();
     }
 
-    public void Update() {
-        //map.Update();
-        naziBaseVinnitsa.Update();
-        naziBaseKrasnohrad.Update();
-        naziBaseYalta.Update();
-    }
-
-    public void Render(Graphics g) {
-        //map.Draw(g);
-        naziBaseVinnitsa.Draw(g);
-        naziBaseKrasnohrad.Draw(g);
-        naziBaseYalta.Draw(g);
-    }
-
+    // This function implements a game loop that updates the game world and repaints
+    // the game panel to achieve a target frames-per-second (FPS) and updates-per-second (UPS) rate
     @Override
     public void run() {
         double timePerFrame = 1000000000.0 / FPS_SET;
@@ -87,7 +51,7 @@ public class Game implements Runnable {
             previousTime = currentTime;
 
             if (deltaU >= 1) {
-                Update();
+                gameWorld.Update();
                 updates++;
                 deltaU--;
             }

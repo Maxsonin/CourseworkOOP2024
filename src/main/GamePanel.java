@@ -9,18 +9,17 @@ import java.awt.*;
 import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
 
-
 public class GamePanel extends JPanel {
     private MouseInputs mouseInputs;
-    private Game game;
+    private GameWorld gameWorld;
 
-    public GamePanel(Game game) {
-        mouseInputs = new MouseInputs(this);
-        this.game = game;
+    public GamePanel(GameWorld gameWorld) {
+        mouseInputs = new MouseInputs(gameWorld);
+        this.gameWorld = gameWorld;
 
         setPanelSize();
 
-        addKeyListener(new KeyboardInputs(game.GetMap()));
+        addKeyListener(new KeyboardInputs(gameWorld));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
     }
@@ -32,6 +31,6 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        game.Render(g);
+        gameWorld.Render(g);
     }
 }

@@ -1,50 +1,40 @@
+// Class for handling all Keyboard Inputs
+
 package inputs;
 
-import map.Map;
+import Entitys.BaseClasses.Infantry;
+import main.GameWorld;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class KeyboardInputs implements KeyListener {
+    private GameWorld gameWorld;
 
-    private Map map;
 
-    public KeyboardInputs(Map map) {
-        this.map = map;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public KeyboardInputs(GameWorld gameWorld) { this.gameWorld = gameWorld; }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int amount = map.GetAmountOfDisplacement();
+        ArrayList<Infantry> controllableEntitiesFromHierarchy = gameWorld.getAllControllableEntitiesFromHierarchy();
 
         int keyCode = e.getKeyCode();
+        for (Infantry activatedAttacker : controllableEntitiesFromHierarchy) {
+            activatedAttacker.getControllableComponent().handleMovement(keyCode);
+        }
+
         switch (keyCode) {
-            case KeyEvent.VK_S:
-                map.moveViewDown(amount);
-                System.out.println("S");
-                break;
-            case KeyEvent.VK_W:
-                map.moveViewUp(amount);
-                System.out.println("W");
-                break;
-            case KeyEvent.VK_D:
-                map.moveViewRight(amount);
-                System.out.println("D");
-                break;
-            case KeyEvent.VK_A:
-                map.moveViewLeft(amount);
-                System.out.println("A");
+            // Test if keyboard is responding
+            case KeyEvent.VK_T:
+                System.out.println("Keyboard is responding!");
                 break;
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyTyped(KeyEvent e) { }
 
-    }
+    @Override
+    public void keyReleased(KeyEvent e) { }
 }

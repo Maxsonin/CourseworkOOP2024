@@ -1,36 +1,43 @@
 package Bases;
 
-import javafx.scene.text.Text;
-import utils.Point;
+import Utils.Vector2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Base {
+    // Img Settings
     protected String fileName;
     protected BufferedImage img;
-    protected Point<Integer> imgSize;
 
-    protected Color baseColor;
-    protected String baseName;
+    // Base Identity Settings
+    protected Color color;
+    protected String name;
+    protected double scaleFactor;
 
-    protected Point<Double> position;
+    // Base Setting
+    protected final Vector2<Double> position;
 
-    public Base(Point<Double> position) {
-        this.position = position;
-    }
+    public Base(Vector2<Double> position) { this.position = position; }
 
-    public void InitializeImg(String fileName, Point<Integer> imgSize) {
+    public void InitializeImg(String fileName, double scaleFactor) {
         this.fileName = fileName;
-        this.imgSize = imgSize;
+        this.scaleFactor = scaleFactor;
     }
 
     public void InitializeBaseSettings(Color baseColor, String baseName) {
-        this.baseColor = baseColor;
-        this.baseName = baseName;
+        this.color = baseColor; this.name = baseName;
     }
 
-    public abstract void AddEntity();
-    public abstract void Draw(Graphics g);
-    public abstract void Update();
+    public void drawImg(Graphics g) {
+        double scaledWidth = img.getWidth() * scaleFactor;
+        double scaledHeight = img.getHeight() * scaleFactor;
+        g.drawImage(img, (int)(position.getX() - 0), (int)(position.getY() - 0), (int)scaledWidth, (int)scaledHeight, null);
+    }
+
+    public String getName() { return name; }
+
+    public abstract void addEntity();
+    public abstract void draw(Graphics g);
+    public abstract void update();
 }

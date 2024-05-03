@@ -1,6 +1,6 @@
 package main;
 
-import map.Map;
+import Map.Map;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +23,14 @@ public class MenuBar extends JMenuBar {
         viewMenu.add(view75Item);
         viewMenu.add(view100Item);
 
+        JMenu deleteMenu = new JMenu("Delete");
+
+        JMenu deleteAllMenu = new JMenu("Delete All");
+
         this.add(viewMenu);
+
+        this.add(deleteMenu);
+
+        this.add(deleteAllMenu);
     }
 }

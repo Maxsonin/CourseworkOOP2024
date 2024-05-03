@@ -1,103 +1,98 @@
 package Bases;
 
-import Entitys.NaziAttacker;
-import Entitys.NaziKombat;
-import Entitys.NaziSquadLeader;
-import map.Map;
-import utils.Loader;
-import utils.Point;
+import Entitys.BaseClasses.Infantry;
+import Entitys.NaziEntities.NaziInfantry;
+import Entitys.NaziEntities.NaziKombat;
+import Entitys.NaziEntities.NaziSquadLeader;
+import Utils.Loader;
+import Utils.Vector2;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class NaziBase extends Base {
-    private ArrayList<NaziAttacker> attackers;
-    private ArrayList<NaziSquadLeader> squadLeaders;
-    private ArrayList<NaziKombat> kombats;
-    private final int numOfAttackers = 5;
-    private final int numOfSquadLeaders = 1;
-    private final int numOfKombats = 1;
-    private final Point<Double> spawnPos;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    Map map;
+    // Army Settings
+    private ArrayList<Infantry> entities;
 
-    private long lastUpdateTime = System.currentTimeMillis();
+    private final int maxNumOfAttackers = 5;
+    private final int maxNumOfSquadLeaders = 1;
+    private final int maxNumOfKombats = 1;
 
-    public NaziBase(Map map, Point<Double> position) {
+    // Base Settings
+    private final Vector2<Double> entitySpawnPos;
+
+    public NaziBase(Vector2<Double> position) {
         super(position);
-        this.map = map;
-        InitializeImg("naziBase.png", new Point<>(270, 187));
-
+        InitializeImg("/nazi/bases/naziBase.png", 0.5);
         img = Loader.GetSprite(fileName);
+        entitySpawnPos = new Vector2<>(this.position.getX() + img.getWidth() * scaleFactor / 2 , this.position.getY() + img.getHeight() * scaleFactor / 2);
 
-        attackers = new ArrayList<>();
-        squadLeaders = new ArrayList<>();
-        kombats = new ArrayList<>();
+        entities = new ArrayList<>();
 
-        spawnPos = new Point<>(position.getX() + imgSize.getX() / 2 , position.getY() + imgSize.getY() / 2);
+        // Schedule the entity addition task
+        scheduler.scheduleAtFixedRate(this::addEntity, 0, 2500, TimeUnit.MILLISECONDS);
+    }
+
+    public ArrayList<Infantry> getEntities() {
+        return entities;
     }
 
     @Override
-    public void AddEntity() {
-        if (kombats.size() < numOfKombats) {
-            kombats.add(new NaziKombat(map, spawnPos.getCopy()));
-        } else if (squadLeaders.size() < numOfSquadLeaders) {
-            squadLeaders.add(new NaziSquadLeader(map, spawnPos.getCopy()));
-        } else if (attackers.size() < numOfAttackers) {
-            attackers.add(new NaziAttacker(map, spawnPos.getCopy()));
+    public synchronized void addEntity() {
+        if (entities.size() < maxNumOfKombats) {
+            entities.add(new NaziKombat(entitySpawnPos.copy()));
+        } else if (entities.size() < maxNumOfSquadLeaders + maxNumOfKombats) {
+            entities.add(new NaziSquadLeader(entitySpawnPos.copy()));
+        } else if (entities.size() < maxNumOfAttackers + maxNumOfSquadLeaders + maxNumOfKombats) {
+            entities.add(new NaziInfantry(entitySpawnPos.copy()));
         }
     }
 
+    public <T extends Infantry> ArrayList<T> getEntitiesByType(Class<T> entityType) {
+        ArrayList<T> entitiesOfType = new ArrayList<>();
+        for (Infantry entity : entities) {
+            if (entityType.isInstance(entity)) {
+                entitiesOfType.add(entityType.cast(entity));
+            }
+        }
+        return entitiesOfType;
+    }
+
     @Override
-    public void Draw(Graphics g) {
-        g.drawImage(img, (int)(position.getX() - 0), (int)(position.getY() - 0), imgSize.getX(), imgSize.getY(), null);
+    public void draw(Graphics g) {
+        drawImg(g);
 
-        for (NaziAttacker attacker : attackers) {
-            attacker.Draw(g);
-        }
-        for (NaziSquadLeader squadLeader : squadLeaders) {
-            squadLeader.Draw(g);
-        }
-        for (NaziKombat kombat : kombats) {
-            kombat.Draw(g);
+        for (var entity : entities) {
+            entity.draw(g);
         }
 
-        ((Graphics2D)g).setStroke(new BasicStroke(8));
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(8));
         g.setColor(Color.BLACK);
-        g.drawOval((int)(position.getX() - 10), (int)(position.getY() - 25), 35, 35);
+        g.drawOval((int) (position.getX() - 10), (int) (position.getY() - 25), 35, 35);
 
-        g.setColor(baseColor);
-        g.fillOval((int)(position.getX() - 10), (int)(position.getY() - 25), 35, 35);
+        g.setColor(color);
+        g.fillOval((int) (position.getX() - 10), (int) (position.getY() - 25), 35, 35);
 
-        // Вывод текста
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 22));
-        g.drawString(baseName, (int)(position.getX() + 40), (int)(position.getY() + 0));
+        g.drawString(name, (int) (position.getX() + 40), (int) (position.getY() + 0));
     }
 
-
     @Override
-    public void Update() {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastUpdateTime >= 2500) {
-            AddEntity();
-            lastUpdateTime = currentTime;
+    public void update() {
+        for (var entity : entities) {
+            entity.update();
         }
+    }
 
-        for (NaziKombat kombat : kombats) {
-            kombat.Update();
-        }
-
-        for (NaziSquadLeader squadLeader : squadLeaders) {
-            squadLeader.Update();
-        }
-
-        for (NaziAttacker attacker : attackers) {
-            attacker.Update();
-        }
+    // Should be called at the end of the application...
+    public void shutdown() {
+        scheduler.shutdown();
     }
 }

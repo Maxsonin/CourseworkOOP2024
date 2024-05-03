@@ -993,13 +993,13 @@ instanceKlass java/lang/module/ModuleReader
 instanceKlass jdk/internal/loader/BuiltinClassLoader$5
 instanceKlass jdk/internal/loader/BuiltinClassLoader$2
 instanceKlass jdk/internal/module/Resources
-instanceKlass utils/Loader
-instanceKlass utils/Point
+instanceKlass Utils/Loader
+instanceKlass Utils/Point
 instanceKlass java/awt/Transparency
 instanceKlass java/awt/image/WritableRenderedImage
 instanceKlass java/awt/image/RenderedImage
 instanceKlass java/awt/Image
-instanceKlass map/Map
+instanceKlass Map/Map
 instanceKlass main/Game
 instanceKlass jdk/internal/misc/PreviewFeatures
 instanceKlass jdk/internal/misc/MainMethodFinder
