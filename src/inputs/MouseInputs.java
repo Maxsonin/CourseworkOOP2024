@@ -2,8 +2,8 @@
 
 package inputs;
 
-import Bases.NaziBase;
-import Entitys.Entity;
+import bases.NaziBase;
+import entitys.Entity;
 import main.GameWorld;
 
 import java.awt.event.MouseEvent;

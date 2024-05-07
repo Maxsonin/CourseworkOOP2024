@@ -1,11 +1,12 @@
-package Bases;
+package bases;
 
-import Entitys.BaseClasses.Infantry;
-import Entitys.NaziEntities.NaziInfantry;
-import Entitys.NaziEntities.NaziKombat;
-import Entitys.NaziEntities.NaziSquadLeader;
-import Utils.Loader;
-import Utils.Vector2;
+import entitys.BaseClasses.Infantry;
+import entitys.NaziEntities.NaziInfantry;
+import entitys.NaziEntities.NaziKombat;
+import entitys.NaziEntities.NaziSquadLeader;
+import utils.Loader;
+import utils.SD;
+import utils.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,9 +24,6 @@ public class NaziBase extends Base {
     private final int maxNumOfSquadLeaders = 1;
     private final int maxNumOfKombats = 1;
 
-    // Base Settings
-    private final Vector2<Double> entitySpawnPos;
-
     public NaziBase(Vector2<Double> position) {
         super(position);
         InitializeImg("/nazi/bases/naziBase.png", 0.5);
@@ -38,9 +36,7 @@ public class NaziBase extends Base {
         scheduler.scheduleAtFixedRate(this::addEntity, 0, 2500, TimeUnit.MILLISECONDS);
     }
 
-    public ArrayList<Infantry> getEntities() {
-        return entities;
-    }
+    public ArrayList<Infantry> getEntities() { return entities; }
 
     @Override
     public synchronized void addEntity() {
@@ -50,6 +46,22 @@ public class NaziBase extends Base {
             entities.add(new NaziSquadLeader(entitySpawnPos.copy()));
         } else if (entities.size() < maxNumOfAttackers + maxNumOfSquadLeaders + maxNumOfKombats) {
             entities.add(new NaziInfantry(entitySpawnPos.copy()));
+        }
+    }
+
+    public void addCustomEntity(String id, boolean isControllable, String selectedClass, double velocity, int damage) {
+        switch (selectedClass) {
+            case SD.Infantry:
+                entities.add(new NaziInfantry(isControllable, entitySpawnPos.copy(), velocity, damage));
+                break;
+            case SD.SquadLeader:
+                entities.add(new NaziSquadLeader(isControllable, entitySpawnPos.copy(), velocity, damage));
+                break;
+            case SD.Kombat:
+                entities.add(new NaziKombat(isControllable, entitySpawnPos.copy(), velocity, damage));
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown entity class");
         }
     }
 

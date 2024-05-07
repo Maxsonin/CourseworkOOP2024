@@ -1,9 +1,9 @@
 // Component to give Entity an ability to be controlled by User
 
-package Components;
+package components;
 
-import Entitys.Entity;
-import Utils.Vector2;
+import entitys.Entity;
+import utils.Vector2;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
 public class Controllable {
     private Entity parentObj;
     private boolean isControllable = false;
+
+    private final double velocityInControllable = 5.0;
 
     public Controllable(Entity parentObj) {
         this.parentObj = parentObj;
@@ -40,23 +42,22 @@ public class Controllable {
         if (!isControllable || parentObj == null) { return; }
 
         Vector2<Double> objPosition = parentObj.getPosition();
-        double objVelocity = parentObj.getVelocity();
 
         switch (keyCode) {
             case KeyEvent.VK_UP:
-                objPosition.moveY(-objVelocity);
+                objPosition.moveY(-velocityInControllable);
                 System.out.println("Up");
                 break;
             case KeyEvent.VK_DOWN:
-                objPosition.moveY(objVelocity);
+                objPosition.moveY(velocityInControllable);
                 System.out.println("Down");
                 break;
             case KeyEvent.VK_LEFT:
-                objPosition.moveX(-objVelocity);
+                objPosition.moveX(-velocityInControllable);
                 System.out.println("Left");
                 break;
             case KeyEvent.VK_RIGHT:
-                objPosition.moveX(objVelocity);
+                objPosition.moveX(velocityInControllable);
                 System.out.println("Right");
                 break;
         }

@@ -1,6 +1,6 @@
 //This class provides a static method that loads and returns a BufferedImage from a specified file path within the project's resources directory, handling resource loading and potential IOExceptions.
 
-package Utils;
+package utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

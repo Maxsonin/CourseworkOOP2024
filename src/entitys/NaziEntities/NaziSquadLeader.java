@@ -1,7 +1,7 @@
-package Entitys.NaziEntities;
+package entitys.NaziEntities;
 
-import Entitys.BaseClasses.SquadLeader;
-import Utils.Vector2;
+import entitys.BaseClasses.SquadLeader;
+import utils.Vector2;
 
 import java.awt.*;
 
@@ -13,6 +13,13 @@ public class NaziSquadLeader extends SquadLeader {
         initializeSquadLeaderStats(20, 25);
     }
 
+    public NaziSquadLeader(boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+        super(position);
+        initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
+        initializeBaseStats(velocity, damage, 15);
+        controllable.setControllable(isControllable);
+    }
+
     @Override
     public void move() {
          position.moveX(velocity);
@@ -21,6 +28,7 @@ public class NaziSquadLeader extends SquadLeader {
     @Override
     public void draw(Graphics g) {
         drawImg(g);
+        healthStats.drawHealthStats(g);
 
         if (getControllableComponent().isControllable()) {
             controllable.drawBorder(g);

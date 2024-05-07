@@ -1,7 +1,7 @@
-package Entitys.NaziEntities;
+package entitys.NaziEntities;
 
-import Entitys.BaseClasses.Kombat;
-import Utils.Vector2;
+import entitys.BaseClasses.Kombat;
+import utils.Vector2;
 
 import java.awt.*;
 
@@ -15,6 +15,13 @@ public class NaziKombat extends Kombat {
         initializeKombatStats(10, 25);
     }
 
+    public NaziKombat(boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+        super(position);
+        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
+        initializeBaseStats(velocity, damage, 15);
+        controllable.setControllable(isControllable);
+    }
+
     @Override
     public void move() {
         position.moveX(velocity);
@@ -23,6 +30,7 @@ public class NaziKombat extends Kombat {
     @Override
     public void draw(Graphics g) {
         drawImg(g);
+        healthStats.drawHealthStats(g);
 
         if (getControllableComponent().isControllable()) {
             controllable.drawBorder(g);

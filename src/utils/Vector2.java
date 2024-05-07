@@ -1,5 +1,5 @@
 // Class that imitates array with only two numeric values: x and y
-package Utils;
+package utils;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
-package Bases;
+package bases;
 
-import Utils.Vector2;
+import utils.Vector2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,7 +16,8 @@ public abstract class Base {
     protected double scaleFactor;
 
     // Base Setting
-    protected final Vector2<Double> position;
+    protected Vector2<Double> position;
+    protected Vector2<Double> entitySpawnPos;
 
     public Base(Vector2<Double> position) { this.position = position; }
 
@@ -36,6 +37,7 @@ public abstract class Base {
     }
 
     public String getName() { return name; }
+    public Vector2<Double> getEntitySpawnPos() { return entitySpawnPos; }
 
     public abstract void addEntity();
     public abstract void draw(Graphics g);

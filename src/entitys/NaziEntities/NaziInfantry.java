@@ -1,7 +1,7 @@
-package Entitys.NaziEntities;
+package entitys.NaziEntities;
 
-import Entitys.BaseClasses.Infantry;
-import Utils.Vector2;
+import entitys.BaseClasses.Infantry;
+import utils.Vector2;
 
 import java.awt.*;
 
@@ -10,6 +10,13 @@ public class NaziInfantry extends Infantry {
         super(position);
         initializeEntityImgSettings("nazi/entities/infantry.png", 1);
         initializeBaseStats(0.3, 20, 15);
+    }
+
+    public NaziInfantry(boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+        super(position);
+        initializeEntityImgSettings("nazi/entities/infantry.png", 1);
+        initializeBaseStats(velocity, damage, 15);
+        controllable.setControllable(isControllable);
     }
 
     @Override
@@ -27,6 +34,7 @@ public class NaziInfantry extends Infantry {
     @Override
     public void draw(Graphics g) {
         drawImg(g);
+        healthStats.drawHealthStats(g);
 
         if (getControllableComponent().isControllable()) {
             controllable.drawBorder(g);

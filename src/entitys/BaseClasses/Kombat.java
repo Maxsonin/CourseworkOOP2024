@@ -1,8 +1,8 @@
 // Third Entity in the triple inheritance hierarchy
 
-package Entitys.BaseClasses;
+package entitys.BaseClasses;
 
-import Utils.Vector2;
+import utils.Vector2;
 
 public abstract class Kombat extends SquadLeader {
     // Entity features

@@ -1,9 +1,9 @@
 package main;
 
-import Bases.NaziBase;
-import Entitys.BaseClasses.Infantry;
-import Utils.Vector2;
-import Map.Map;
+import bases.NaziBase;
+import entitys.BaseClasses.Infantry;
+import utils.Vector2;
+import map.Map;
 
 import java.awt.*;
 import java.util.ArrayList;

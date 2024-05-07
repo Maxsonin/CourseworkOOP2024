@@ -2,7 +2,9 @@
 
 package inputs;
 
-import Entitys.BaseClasses.Infantry;
+import bases.NaziBase;
+import entitys.BaseClasses.Infantry;
+import javafx.scene.chart.NumberAxis;
 import main.GameWorld;
 
 import java.awt.event.KeyEvent;
@@ -20,14 +22,32 @@ public class KeyboardInputs implements KeyListener {
         ArrayList<Infantry> controllableEntitiesFromHierarchy = gameWorld.getAllControllableEntitiesFromHierarchy();
 
         int keyCode = e.getKeyCode();
-        for (Infantry activatedAttacker : controllableEntitiesFromHierarchy) {
-            activatedAttacker.getControllableComponent().handleMovement(keyCode);
+        for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
+            activatedEntity.getControllableComponent().handleMovement(keyCode);
         }
 
         switch (keyCode) {
             // Test if keyboard is responding
             case KeyEvent.VK_T:
                 System.out.println("Keyboard is responding!");
+                break;
+            case KeyEvent.VK_ESCAPE:
+                for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
+                    activatedEntity.getControllableComponent().setControllable(false);
+                }
+                break;
+            case KeyEvent.VK_DELETE:
+                var naziBases = gameWorld.getNaziBases();
+
+                for (NaziBase naziBase : naziBases) {
+                    var entities = naziBase.getEntities();
+                        for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
+                            if (entities.contains(activatedEntity))
+                            {
+                                entities.remove(activatedEntity);
+                            }
+                        }
+                }
                 break;
         }
     }

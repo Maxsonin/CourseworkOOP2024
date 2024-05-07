@@ -21,7 +21,7 @@ public class Game implements Runnable {
         gameWorld = new GameWorld();
 
         gamePanel = new GamePanel(gameWorld);
-        gameWindow = new GameWindow(gamePanel, gameWorld.getMap()); // ?????
+        gameWindow = new GameWindow(gamePanel, gameWorld);
         gamePanel.requestFocus();
 
         StartGameLoop();

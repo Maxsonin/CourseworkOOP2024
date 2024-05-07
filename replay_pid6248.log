@@ -20,7 +20,7 @@ instanceKlass java/awt/Container$EventTargetFilter
 instanceKlass java/awt/Cursor$CursorDisposer
 instanceKlass java/awt/event/MouseEvent$1
 instanceKlass sun/awt/AWTAccessor$MouseEventAccessor
-instanceKlass Entitys/Entity
+instanceKlass entitys/Entity
 instanceKlass javax/swing/Scrollable
 instanceKlass java/text/AttributedString$AttributedStringIterator
 instanceKlass java/text/AttributedCharacterIterator
@@ -577,7 +577,7 @@ instanceKlass java/awt/image/ImageObserver
 instanceKlass javax/swing/TransferHandler$HasGetTransferHandler
 instanceKlass javax/accessibility/Accessible
 instanceKlass java/nio/charset/StandardCharsets
-instanceKlass Bases/Base
+instanceKlass bases/Base
 instanceKlass java/io/RandomAccessFile$1
 instanceKlass java/awt/image/BufferedImage$1
 instanceKlass sun/awt/image/SurfaceManager
@@ -993,13 +993,13 @@ instanceKlass java/lang/module/ModuleReader
 instanceKlass jdk/internal/loader/BuiltinClassLoader$5
 instanceKlass jdk/internal/loader/BuiltinClassLoader$2
 instanceKlass jdk/internal/module/Resources
-instanceKlass Utils/Loader
-instanceKlass Utils/Point
+instanceKlass utils/Loader
+instanceKlass utils/Point
 instanceKlass java/awt/Transparency
 instanceKlass java/awt/image/WritableRenderedImage
 instanceKlass java/awt/image/RenderedImage
 instanceKlass java/awt/Image
-instanceKlass Map/Map
+instanceKlass map/map
 instanceKlass main/Game
 instanceKlass jdk/internal/misc/PreviewFeatures
 instanceKlass jdk/internal/misc/MainMethodFinder
@@ -1352,7 +1352,7 @@ instanceKlass java/lang/Runtime
 instanceKlass java/lang/VersionProps
 instanceKlass java/lang/StringConcatHelper
 instanceKlass java/util/HashMap$Node
-instanceKlass java/util/Map$Entry
+instanceKlass java/util/map$Entry
 instanceKlass jdk/internal/util/ArraysSupport
 instanceKlass sun/nio/cs/HistoricallyNamedCharset
 instanceKlass java/nio/charset/spi/CharsetProvider
@@ -1447,7 +1447,7 @@ instanceKlass java/lang/reflect/Parameter
 instanceKlass java/lang/reflect/Member
 instanceKlass java/lang/reflect/AccessibleObject
 instanceKlass java/lang/Module
-instanceKlass java/util/Map
+instanceKlass java/util/map
 instanceKlass java/util/Dictionary
 instanceKlass java/lang/ThreadGroup
 instanceKlass java/lang/Thread$UncaughtExceptionHandler
@@ -1495,7 +1495,7 @@ staticfield java/lang/Boolean FALSE Ljava/lang/Boolean; java/lang/Boolean
 staticfield java/lang/Boolean TYPE Ljava/lang/Class; java/lang/Class
 ciInstanceKlass java/lang/Comparable 1 0 12 100 1 100 1 1 1 1 1 1 1 1
 ciInstanceKlass java/lang/constant/Constable 1 0 11 100 1 100 1 1 1 1 1 1 1
-ciInstanceKlass java/util/Map 1 1 263 11 7 12 1 1 1 11 12 1 1 10 100 12 1 1 11 12 1 1 11 7 12 1 1 1 11 100 12 1 1 1 11 12 1 1 7 1 11 12 1 11 12 1 100 1 100 1 10 12 1 1 11 100 12 1 1 1 11 100 12 1 1 1 11 12 1 11 12 1 10 12 1 1 11 12 1 11 100 12 1 9 7 12 1 1 1 100 1 10 12 7 1 7 1 10 12 1 7 1 10 7 1 11 12 1 11 12 1 1 11 12 1 1 7 1 11 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ciInstanceKlass java/util/map 1 1 263 11 7 12 1 1 1 11 12 1 1 10 100 12 1 1 11 12 1 1 11 7 12 1 1 1 11 100 12 1 1 1 11 12 1 1 7 1 11 12 1 11 12 1 100 1 100 1 10 12 1 1 11 100 12 1 1 1 11 100 12 1 1 1 11 12 1 11 12 1 10 12 1 1 11 12 1 11 100 12 1 9 7 12 1 1 1 100 1 10 12 7 1 7 1 10 12 1 7 1 10 7 1 11 12 1 11 12 1 1 11 12 1 1 7 1 11 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ciInstanceKlass java/lang/Class 1 1 1698 10 7 12 1 1 1 9 7 12 1 1 1 9 12 1 1 10 12 1 1 8 1 10 12 1 8 1 8 1 10 12 1 1 10 7 12 1 1 1 10 12 1 7 1 10 10 12 1 10 12 1 1 10 12 1 1 10 12 1 1 10 100 12 1 1 10 12 1 10 12 1 10 12 1 8 1 10 12 1 8 1 10 12 1 8 1 8 1 10 12 1 1 10 7 12 1 1 1 18 12 1 1 11 7 12 1 1 1 8 1 8 1 8 1 10 7 12 1 1 1 11 12 1 1 8 1 10 12 1 10 11 100 12 1 1 1 11 7 12 1 1 1 11 8 1 18 8 1 10 12 1 10 7 12 1 1 10 12 1 1 10 7 12 1 1 1 10 12 1 1 10 12 1 1 10 7 12 1 1 1 10 12 9 100 12 1 1 1 10 7 12 1 1 1 10 12 1 10 7 12 1 1 1 10 12 1 1 18 12 1 1 10 7 12 1 1 1 10 7 12 1 10 12 1 1 10 7 1 7 1 10 12 1 1 9 12 1 1 100 1 8 1 10 12 1 10 12 1 1 10 12 1 1 10 7 12 1 1 1 100 1 10 12 1 7 1 100 1 10 10 12 1 1 10 12 1 1 100 1 10 7 12 1 1 1 10 12 1 1 10 12 1 1 9 12 1 1 10 12 1 10 12 1 1 9 12 1 1 9 12 1 1 10 12 1 1 10 100 1 10 12 1 10 12 1 10 12 1 1 10 9 12 1 10 12 1 8 1 10 12 1 1 10 12 1 1 10 12 1 10 12 1 1 10 12 1 1 10 12 1 1 9 7 12 1 1 1 10 7 12 1 1 10 12 10 12 1 10 12 1 10 12 1 10 12 1 9 100 12 1 1 1 9 12 1 10 12 1 10 100 12 1 1 1 10 12 1 1 10 100 12 1 1 10 12 1 10 12 1 1 10 100 12 1 1 1 10 12 1 10 12 1 1 10 12 1 10 12 1 10 12 1 1 10 7 1 10 10 10 12 1 1 10 12 1 1 10 12 10 10 12 1 1 7 1 8 1 10 10 12 1 1 10 12 1 100 1 11 12 1 10 100 12 1 1 10 12 1 10 12 1 10 100 12 1 1 10 10 12 1 1 8 1 10 12 1 10 12 1 1 8 1 10 12 1 9 12 1 10 12 1 10 12 1 10 12 1 10 12 7 1 9 12 1 10 12 1 9 12 1 10 12 1 10 12 1 10 12 1 10 10 12 1 10 12 1 10 100 12 1 1 10 12 1 10 12 1 10 12 1 1 10 12 1 10 12 1 10 12 1 100 1 10 12 1 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 100 1 10 10 12 1 1 10 12 1 1 10 12 1 1 10 10 12 1 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 7 1 10 10 12 11 7 12 1 1 10 12 1 10 12 1 10 100 12 1 1 1 10 12 1 1 10 10 12 1 1 7 1 10 10 12 1 1 10 7 12 1 1 1 100 1 100 1 10 12 1 1 10 12 1 10 10 12 1 1 10 12 1 10 12 1 10 12 1 10 100 12 1 1 1 11 100 12 1 1 10 12 1 10 12 1 9 12 1 10 12 1 1 10 12 1 9 12 1 1 100 1 10 9 12 1 1 10 12 7 1 10 12 1 9 12 1 10 100 12 1 1 1 10 12 1 10 12 1 10 100 12 1 1 1 10 12 1 10 12 10 12 1 1 100 1 10 8 1 10 12 1 11 11 12 1 1 11 7 12 1 1 11 12 1 8 1 10 12 1 10 12 1 1 9 12 1 9 12 1 1 10 7 12 1 1 9 12 1 10 12 1 1 10 10 12 1 10 7 12 1 1 1 10 100 12 1 1 10 100 12 1 1 9 12 1 1 10 12 1 9 12 1 10 12 1 10 12 1 1 9 12 1 1 9 12 1 10 12 1 10 12 1 1 9 12 1 100 1 10 10 12 1 1 7 1 10 12 1 1 100 11 7 1 9 12 1 1 9 12 1 7 1 10 12 1 9 12 1 1 9 12 1 10 12 1 10 12 1 1 9 12 1 100 1 10 10 12 1 1 10 10 12 1 10 12 10 10 12 1 9 12 1 10 12 1 1 10 7 12 1 1 1 10 12 1 1 10 12 1 8 10 100 8 1 18 8 1 8 1 10 12 1 9 12 1 9 12 1 1 10 12 1 7 1 7 1 10 12 1 9 12 1 1 7 1 10 10 12 1 10 7 1 9 12 1 8 1 10 12 1 7 1 10 12 1 10 12 1 1 100 1 7 1 9 12 1 100 1 8 1 10 10 7 12 1 1 1 10 12 11 7 12 1 1 1 10 12 1 10 12 1 1 10 8 1 8 1 10 12 1 1 9 100 12 1 1 11 12 7 1 11 7 12 1 1 9 12 1 10 100 12 1 1 1 10 100 12 1 1 10 12 1 1 9 12 1 9 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 11 12 1 100 1 11 12 1 10 100 12 1 1 1 10 12 1 11 12 1 10 100 12 1 1 1 10 12 1 10 100 12 1 1 1 11 12 1 11 12 1 1 10 12 1 10 12 1 1 9 12 1 1 9 100 12 1 1 10 12 1 10 100 12 1 1 1 10 12 1 1 10 12 1 10 12 1 10 12 1 10 7 12 1 1 1 10 12 1 8 1 10 12 1 10 12 1 10 12 1 100 1 10 12 10 100 12 1 1 1 11 100 12 1 1 1 10 12 1 1 10 12 1 18 12 1 1 11 12 1 1 18 11 12 1 18 12 1 11 12 1 10 12 1 1 10 12 1 10 12 1 10 12 1 10 12 1 10 12 10 12 1 8 1 10 12 1 7 1 9 12 1 1 7 1 7 1 7 1 7 1 1 1 3 1 3 1 3 1 1 1 1 1 1 1 5 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 100 1 1 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 16 15 10 12 16 15 11 12 16 1 16 15 16 15 10 12 16 16 15 10 12 16 15 16 1 15 10 12 16 15 10 7 12 1 1 1 1 1 1 1 1 1 1 1 1 7 1 1 100 1 100 1 1 100 1 100 1 1 100 1 100 1 1
 staticfield java/lang/Class EMPTY_CLASS_ARRAY [Ljava/lang/Class; 0 [Ljava/lang/Class;
 staticfield java/lang/Class serialPersistentFields [Ljava/io/ObjectStreamField; 0 [Ljava/io/ObjectStreamField;
@@ -1845,7 +1845,7 @@ instanceKlass jdk/internal/loader/ClassLoaders$BootClassLoader
 instanceKlass jdk/internal/loader/ClassLoaders$PlatformClassLoader
 instanceKlass jdk/internal/loader/ClassLoaders$AppClassLoader
 ciInstanceKlass jdk/internal/loader/BuiltinClassLoader 1 1 737 9 7 12 1 1 1 10 7 12 1 1 1 10 7 12 1 1 1 9 12 1 1 9 12 1 1 7 1 10 12 1 9 12 1 10 12 1 9 12 1 10 7 12 1 1 1 10 7 12 1 1 1 10 7 12 1 1 1 11 7 12 1 1 1 7 1 7 1 10 10 12 1 1 8 1 10 12 1 10 12 7 1 10 12 1 10 12 1 1 11 7 12 1 1 1 11 7 12 1 1 1 11 12 1 1 7 1 8 1 8 1 10 9 12 1 1 10 7 12 1 1 11 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 10 7 12 1 1 1 10 12 1 10 7 12 1 1 1 10 12 1 1 11 7 12 1 1 1 10 7 12 1 1 7 1 10 7 12 1 1 1 10 12 1 100 1 8 1 10 12 1 1 10 8 1 10 12 1 1 10 12 1 1 10 12 1 1 11 7 12 1 1 11 12 1 7 1 10 11 12 1 1 11 10 12 1 1 7 1 10 12 1 10 7 12 1 10 12 1 7 1 10 12 1 10 7 12 1 1 1 100 1 10 12 1 1 11 12 1 100 1 100 1 10 12 1 10 12 1 1 100 1 100 1 10 12 1 10 12 1 18 12 1 1 10 12 1 10 12 1 1 18 100 1 10 7 12 1 1 1 7 1 10 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 9 12 1 1 100 1 10 10 12 1 1 10 12 1 1 10 12 1 10 12 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 10 12 1 1 18 12 1 7 1 10 12 1 1 10 12 1 10 12 1 1 10 12 1 100 1 10 12 1 100 1 10 12 1 10 7 12 1 1 1 10 12 1 11 12 1 100 1 10 12 1 7 1 100 1 10 12 1 10 12 1 11 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 1 10 12 1 10 12 1 10 12 1 10 12 1 8 1 10 12 1 1 10 7 12 1 1 10 12 1 100 1 8 1 8 1 10 10 12 1 8 1 8 1 10 100 12 1 1 1 11 100 12 1 1 1 9 100 12 1 1 1 10 100 12 1 1 1 9 12 1 9 12 1 9 12 1 9 12 1 9 12 1 9 12 1 10 7 12 1 1 1 8 1 10 12 1 7 1 10 12 1 1 10 12 1 7 1 10 11 12 1 1 10 12 10 12 1 10 12 1 100 1 10 12 1 10 12 1 10 10 12 1 10 7 12 1 1 8 1 10 7 12 1 1 10 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 100 1 1 16 15 10 12 16 15 10 12 16 15 10 12 16 1 15 10 100 12 1 1 1 1 1 100 1 1 1 1 1 100 1 100 1 1
-staticfield jdk/internal/loader/BuiltinClassLoader packageToModule Ljava/util/Map; java/util/concurrent/ConcurrentHashMap
+staticfield jdk/internal/loader/BuiltinClassLoader packageToModule Ljava/util/map; java/util/concurrent/ConcurrentHashMap
 staticfield jdk/internal/loader/BuiltinClassLoader $assertionsDisabled Z 1
 ciInstanceKlass jdk/internal/loader/ClassLoaders$AppClassLoader 1 1 119 8 1 10 7 12 1 1 1 10 7 12 1 1 1 10 7 12 1 1 1 10 12 1 1 10 7 12 1 1 1 10 12 1 1 10 12 1 1 7 1 8 1 10 12 10 7 12 1 1 1 10 7 12 1 1 10 12 1 1 10 12 1 1 10 7 12 1 1 1 7 1 10 12 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 1 1 1
 ciInstanceKlass jdk/internal/loader/ClassLoaders$PlatformClassLoader 1 1 42 8 1 10 7 12 1 1 1 10 7 12 1 1 1 7 1 10 12 1 7 1 1 1 1 1 1 1 1 1 1 1 1 1 1 7 1 1 1 100 1 1

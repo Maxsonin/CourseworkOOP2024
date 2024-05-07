@@ -1,7 +1,7 @@
-package Bases;
+package bases;
 
-import Utils.Loader;
-import Utils.Vector2;
+import utils.Loader;
+import utils.Vector2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
