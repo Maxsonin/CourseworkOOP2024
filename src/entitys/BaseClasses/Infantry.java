@@ -21,10 +21,13 @@ public abstract class Infantry extends Entity {
 
     protected String ID;
 
-
-    public Infantry(Vector2<Double> spawnPosition) {
+    public Infantry() {
         initializeComponents();
         generateID();
+    }
+
+    public Infantry(Vector2<Double> spawnPosition) {
+        this();
         this.position = spawnPosition;
     }
 
@@ -33,6 +36,11 @@ public abstract class Infantry extends Entity {
 
     public void setDamage(int damage) { this.damage = damage; }
     public void setID(String ID) { this.ID = ID; }
+
+    // Static initialization block
+    static {
+        System.out.println("Static block initialized");
+    }
 
     private void generateID() {
         Random random = new Random();
@@ -54,4 +62,14 @@ public abstract class Infantry extends Entity {
     public Controllable getControllableComponent() { return controllable; }
 
     public abstract void baseAttack();
+
+    @Override
+    public Infantry deepCopy() {
+        Infantry copy = (Infantry) super.deepCopy(); // Shallow copy of Entity
+        copy.controllable = new Controllable(copy); // Deep copy of Controllable
+        copy.controllable.setControllable(false);
+        copy.healthStats = new HealthStats(copy, this.healthStats.getHealth()); // Deep copy of HealthStats
+
+        return copy;
+    }
 }

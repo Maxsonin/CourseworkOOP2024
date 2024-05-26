@@ -1,3 +1,5 @@
+// Static Details class
+
 package utils;
 
 import java.util.ArrayList;
@@ -5,7 +7,7 @@ import java.util.ArrayList;
 public class SD {
     public static final String WerwolfNaziBase = "Werwolf Nazi Base";
     public static final String KrasnohradNaziBase = "Secret Nazi Base in Krasnohrad";
-    public static final String YaltaNaziBase = "Yalta \"DZIDZIO\" Nazi Base";
+    public static final String YaltaNaziBase = "Yalta \"DZIDZIO\" Nazi Base"; // Will spawn cloned entities
 
     public static final String Infantry = "Infantry";
     public static final String SquadLeader = "Squad Leader";

@@ -17,4 +17,10 @@ public abstract class Kombat extends SquadLeader {
     }
 
    public abstract void kombatAttack();
+
+    @Override
+    public Kombat deepCopy() {
+        Kombat copy = (Kombat) super.deepCopy(); // Invoke deep copy of SquadLeader
+        return copy;
+    }
 }

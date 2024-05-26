@@ -41,24 +41,24 @@ public class NaziBase extends Base {
     @Override
     public synchronized void addEntity() {
         if (entities.size() < maxNumOfKombats) {
-            entities.add(new NaziKombat(entitySpawnPos.copy()));
+            entities.add(new NaziKombat(entitySpawnPos.clone()));
         } else if (entities.size() < maxNumOfSquadLeaders + maxNumOfKombats) {
-            entities.add(new NaziSquadLeader(entitySpawnPos.copy()));
+            entities.add(new NaziSquadLeader(entitySpawnPos.clone()));
         } else if (entities.size() < maxNumOfAttackers + maxNumOfSquadLeaders + maxNumOfKombats) {
-            entities.add(new NaziInfantry(entitySpawnPos.copy()));
+            entities.add(new NaziInfantry(entitySpawnPos.clone()));
         }
     }
 
     public void addCustomEntity(String id, boolean isControllable, String selectedClass, double velocity, int damage) {
         switch (selectedClass) {
             case SD.Infantry:
-                entities.add(new NaziInfantry(isControllable, entitySpawnPos.copy(), velocity, damage));
+                entities.add(new NaziInfantry(id, isControllable, entitySpawnPos.clone(), velocity, damage));
                 break;
             case SD.SquadLeader:
-                entities.add(new NaziSquadLeader(isControllable, entitySpawnPos.copy(), velocity, damage));
+                entities.add(new NaziSquadLeader(id, isControllable, entitySpawnPos.clone(), velocity, damage));
                 break;
             case SD.Kombat:
-                entities.add(new NaziKombat(isControllable, entitySpawnPos.copy(), velocity, damage));
+                entities.add(new NaziKombat(id, isControllable, entitySpawnPos.clone(), velocity, damage));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown entity class");

@@ -12,8 +12,9 @@ public class NaziInfantry extends Infantry {
         initializeBaseStats(0.3, 20, 15);
     }
 
-    public NaziInfantry(boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+    public NaziInfantry(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
+        this.setID(id);
         initializeEntityImgSettings("nazi/entities/infantry.png", 1);
         initializeBaseStats(velocity, damage, 15);
         controllable.setControllable(isControllable);

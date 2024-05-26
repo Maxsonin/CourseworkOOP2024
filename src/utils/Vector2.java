@@ -3,7 +3,7 @@ package utils;
 
 import java.util.Objects;
 
-public class Vector2<T extends Number>{
+public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Cloneable{
     private T x; private T y;
 
     public Vector2(T x, T y) {
@@ -35,8 +35,6 @@ public class Vector2<T extends Number>{
         throw new IllegalArgumentException("Unsupported number type");
     }
 
-    public Vector2<T> copy() { return new Vector2<>(this.x, this.y); }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,4 +48,18 @@ public class Vector2<T extends Number>{
 
     @Override
     public String toString() { return String.format("Vector2{x=%s, y=%s}", x, y); }
+
+    @Override
+    public int compareTo(Vector2<T> other) {
+        // Compare based on the Euclidean distance squared (x^2 + y^2)
+        double thisDistanceSquared = Math.pow(x.doubleValue(), 2) + Math.pow(y.doubleValue(), 2);
+        double otherDistanceSquared = Math.pow(other.getX().doubleValue(), 2) + Math.pow(other.getY().doubleValue(), 2);
+
+        return Double.compare(thisDistanceSquared, otherDistanceSquared);
+    }
+
+    @Override
+    public Vector2<T> clone() {
+        return new Vector2<>(this.getX(), this.getY());
+    }
 }

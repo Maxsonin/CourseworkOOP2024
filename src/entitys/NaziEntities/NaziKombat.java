@@ -15,8 +15,9 @@ public class NaziKombat extends Kombat {
         initializeKombatStats(10, 25);
     }
 
-    public NaziKombat(boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+    public NaziKombat(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
+        this.setID(id);
         initializeEntityImgSettings("nazi/entities/kombat.png", 1);
         initializeBaseStats(velocity, damage, 15);
         controllable.setControllable(isControllable);

@@ -63,8 +63,6 @@ public class HealthStats {
         g.setFont(originalFont);
     }
 
-
-
     public int getHealth() { return health; }
 
     public void changeHealth(int changingValue) {

@@ -18,4 +18,10 @@ public abstract class SquadLeader extends Infantry {
     }
 
     public abstract void squadLeaderAttack();
+
+    @Override
+    public SquadLeader deepCopy() {
+        SquadLeader copy = (SquadLeader) super.deepCopy(); // Invoke deep copy of Infantry
+        return copy;
+    }
 }

@@ -13,8 +13,9 @@ public class NaziSquadLeader extends SquadLeader {
         initializeSquadLeaderStats(20, 25);
     }
 
-    public NaziSquadLeader(boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+    public NaziSquadLeader(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
+        this.setID(id);
         initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
         initializeBaseStats(velocity, damage, 15);
         controllable.setControllable(isControllable);
