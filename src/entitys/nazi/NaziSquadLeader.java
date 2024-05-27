@@ -1,6 +1,6 @@
-package entitys.NaziEntities;
+package entitys.nazi;
 
-import entitys.BaseClasses.SquadLeader;
+import entitys.base.SquadLeader;
 import utils.Vector2;
 
 import java.awt.*;

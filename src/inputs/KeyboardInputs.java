@@ -2,9 +2,9 @@
 
 package inputs;
 
+import bases.Base;
 import bases.NaziBase;
-import entitys.BaseClasses.Infantry;
-import javafx.scene.chart.NumberAxis;
+import entitys.base.Infantry;
 import main.GameWorld;
 
 import java.awt.event.KeyEvent;
@@ -19,7 +19,7 @@ public class KeyboardInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        ArrayList<Infantry> controllableEntitiesFromHierarchy = gameWorld.getAllControllableEntitiesFromHierarchy();
+        ArrayList<Infantry> controllableEntitiesFromHierarchy = gameWorld.getAllControllableEntities();
 
         int keyCode = e.getKeyCode();
         for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
@@ -37,10 +37,10 @@ public class KeyboardInputs implements KeyListener {
                 }
                 break;
             case KeyEvent.VK_DELETE:
-                var naziBases = gameWorld.getNaziBases();
+                var bases = gameWorld.getBases();
 
-                for (NaziBase naziBase : naziBases) {
-                    var entities = naziBase.getEntities();
+                for (Base base : bases) {
+                    var entities = base.getEntities();
                         for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
                             if (entities.contains(activatedEntity))
                             {

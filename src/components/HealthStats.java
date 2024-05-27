@@ -1,5 +1,3 @@
-// Component that adds all health related stuff
-
 package components;
 
 import entitys.Entity;
@@ -12,6 +10,8 @@ public class HealthStats {
     private final int maxHealth;
     private int health;
 
+    private float textSize = 15f;
+    private Color barColor = null; // New field to store the current health bar color
 
     public HealthStats(Entity parentObj, int maxHealth) {
         this.parentObj = parentObj;
@@ -25,7 +25,7 @@ public class HealthStats {
         Font originalFont = g.getFont();
 
         // Derive a new font with size 14 and bold style
-        Font newFont = originalFont.deriveFont(Font.BOLD, 14f);
+        Font newFont = originalFont.deriveFont(Font.BOLD, (float)(textSize * parentObj.getScaleFactor() / 1.2));
         g.setFont(newFont);
 
         FontMetrics fm = g.getFontMetrics();
@@ -35,19 +35,23 @@ public class HealthStats {
         int barAdditionalSize = (int) (imgWidth * 0.50); // +50%
 
         int barWidth = imgWidth + barAdditionalSize;
-        int barHeight = (int) (fm.getHeight() * parentObj.getScaleFactor());
+        int barHeight = fm.getHeight();
         int currentBarWidth = (int) (barWidth * ((double) health / maxHealth));
 
         int barPosX = (int) Math.round(parentObj.getPosition().getX() - (double) barAdditionalSize / 2);
         int barPosY = (int) Math.round(parentObj.getPosition().getY() - fm.getHeight());
 
-        // Set color based on health
-        if (health <= maxHealth * 0.25) {
-            g.setColor(Color.RED);
-        } else if (health <= maxHealth * 0.75) {
-            g.setColor(Color.YELLOW);
+        // Set color based on health or use custom color if set
+        if (barColor != null) {
+            g.setColor(barColor);
         } else {
-            g.setColor(Color.GREEN);
+            if (health <= maxHealth * 0.25) {
+                g.setColor(Color.RED);
+            } else if (health <= maxHealth * 0.75) {
+                g.setColor(Color.YELLOW);
+            } else {
+                g.setColor(Color.GREEN);
+            }
         }
 
         // Draw HP Bar
@@ -81,5 +85,13 @@ public class HealthStats {
         } else if (this.health < 0) {
             this.health = 0;
         }
+    }
+
+    public void setBarColor(Color color) {
+        this.barColor = color;
+    }
+
+    public Color getBarColor() {
+        return barColor;
     }
 }

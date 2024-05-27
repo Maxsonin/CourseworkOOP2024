@@ -6,8 +6,8 @@ public class Game implements Runnable {
     private GamePanel gamePanel;
 
     // FPS and UPS Settings
-    private final int FPS_SET = 120;
-    private final int UPS_SET = 200;
+    private final int FPS_SET = 60;
+    private final int UPS_SET = 120;
     private Thread gameThread;
 
     // Window Settings

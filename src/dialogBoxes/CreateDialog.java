@@ -4,6 +4,7 @@ import bases.NaziBase;
 import main.Game;
 import main.GameWorld;
 import utils.SD;
+import utils.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class CreateDialog {
         frame.setLocationRelativeTo(null); // Set dialogue window to center
         frame.setSize(new Dimension(200, 200));
 
-        JPanel panel = new JPanel(new GridLayout(7, 2));
+        JPanel panel = new JPanel(new GridLayout(9, 2));
 
         // Adding all elements
         panel.add(new JLabel("Entity ID:"));
@@ -33,10 +34,17 @@ public class CreateDialog {
         JCheckBox checkBox = new JCheckBox();
         panel.add(checkBox);
 
-        String[] baseNames = SD.getAllNaziBasesNames().toArray(new String[0]);
-        JComboBox<String> baseNamesComboBox = new JComboBox<>(baseNames);
-        panel.add(new JLabel("Select Base:"));
-        panel.add(baseNamesComboBox);
+        panel.add(new JLabel("Position X:"));
+        JTextField xField = new JTextField();
+        panel.add(xField);
+        panel.add(new JLabel("Position Y:"));
+        JTextField yField = new JTextField();
+        panel.add(yField);
+
+        String[] teamsOptions = SD.getAllTeams().toArray(new String[0]);
+        JComboBox<String> teamsComboBox = new JComboBox<>(teamsOptions);
+        panel.add(new JLabel("Select team:"));
+        panel.add(teamsComboBox);
 
         String[] subclassOptions = SD.getAllEntityTypes().toArray(new String[0]);
         JComboBox<String> classComboBox = new JComboBox<>(subclassOptions);
@@ -54,8 +62,27 @@ public class CreateDialog {
         JButton okButton = new JButton("OK");
         okButton.addActionListener((ActionEvent e) -> {
             String idParam = idField.getText();
+
             boolean isControllableParam = checkBox.isSelected();
-            String selectedBaseParam = (String) baseNamesComboBox.getSelectedItem();
+
+            double positionX;
+            try {
+                positionX = Double.parseDouble(xField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Invalid position X input", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            double positionY;
+            try {
+                positionY = Double.parseDouble(yField.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Invalid position Y input", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Vector2<Double> position = new Vector2<>(positionX, positionY);
+
+            String selectedTeamParam = (String) teamsComboBox.getSelectedItem();
+
             String selectedClassParam = (String) classComboBox.getSelectedItem();
 
             double velocityParam;
@@ -74,7 +101,7 @@ public class CreateDialog {
                 return;
             }
 
-            createEntity(idParam, isControllableParam, selectedBaseParam, selectedClassParam, velocityParam, damageParam);
+            createEntity(idParam, isControllableParam, position, selectedTeamParam, selectedClassParam, velocityParam, damageParam);
 
             frame.dispose();
         });
@@ -84,8 +111,11 @@ public class CreateDialog {
         frame.pack();
         frame.setVisible(true);
     }
-    private void createEntity(String id, boolean isControllable, String selectedBase, String selectedClass, double velocity, int damage) {
-        NaziBase base = gameWorld.getNaziBaseByName(selectedBase);
-        base.addCustomEntity(id, isControllable, selectedClass, velocity, damage);
+
+    private void createEntity(String id, boolean isControllable, Vector2<Double> position, String selectedTeam, String selectedClass, double velocity, int damage) {
+        switch (selectedTeam) {
+            case SD.Soviet -> gameWorld.addCustomSovietEntity(id, isControllable, position, selectedClass, velocity, damage);
+            case SD.Nazi ->  gameWorld.addCustomNaziEntity(id, isControllable, position, selectedClass, velocity, damage);
+        }
     }
 }

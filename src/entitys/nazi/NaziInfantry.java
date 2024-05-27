@@ -1,6 +1,6 @@
-package entitys.NaziEntities;
+package entitys.nazi;
 
-import entitys.BaseClasses.Infantry;
+import entitys.base.Infantry;
 import utils.Vector2;
 
 import java.awt.*;
@@ -9,7 +9,7 @@ public class NaziInfantry extends Infantry {
     public NaziInfantry(Vector2<Double> position) {
         super(position);
         initializeEntityImgSettings("nazi/entities/infantry.png", 1);
-        initializeBaseStats(0.3, 20, 15);
+        initializeBaseStats(0.5, 20, 15);
     }
 
     public NaziInfantry(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {

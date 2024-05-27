@@ -1,12 +1,13 @@
 // Firs Entity in the triple inheritance hierarchy
 
-package entitys.BaseClasses;
+package entitys.base;
 
 import components.Controllable;
 import components.HealthStats;
 import entitys.Entity;
 import utils.Vector2;
 
+import java.awt.*;
 import java.util.Random;
 
 public abstract class Infantry extends Entity {
@@ -71,5 +72,9 @@ public abstract class Infantry extends Entity {
         copy.healthStats = new HealthStats(copy, this.healthStats.getHealth()); // Deep copy of HealthStats
 
         return copy;
+    }
+
+    public void changeHealthColor(Color color) {
+        healthStats.setBarColor(color);
     }
 }

@@ -2,7 +2,7 @@
 
 package inputs;
 
-import bases.NaziBase;
+import entitys.base.Infantry;
 import entitys.Entity;
 import main.GameWorld;
 
@@ -15,24 +15,21 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     private GameWorld gameWorld;
 
+    private ArrayList<Infantry> entities;
+
     public MouseInputs(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
+        entities = gameWorld.getEntities();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        ArrayList<NaziBase> naziBases = gameWorld.getNaziBases();
-
-        for (var naziBase : naziBases) {
-            for (var entity : naziBase.getEntities()) {
-                if (isClickWithinBounds(entity, e.getX(), e.getY())) {
-                    entity.getControllableComponent().setControllable(!entity.getControllableComponent().isControllable());
-                    break;
-                }
+        for (var entity : entities) {
+            if (isClickWithinBounds(entity, e.getX(), e.getY())) {
+                entity.getControllableComponent().setControllable(!entity.getControllableComponent().isControllable());
+                break;
             }
         }
-
-        System.out.println("Click");
     }
 
     // Helper method to check if a click is within the bounds of an entity
@@ -40,8 +37,8 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         // Get entity's position and dimensions
         double attackerX = entity.getPosition().getX();
         double attackerY = entity.getPosition().getY();
-        int attackerWidth = (int)entity.getImgSize().getWidth() * (int)entity.getScaleFactor();
-        int attackerHeight = (int)entity.getImgSize().getHeight() * (int)entity.getScaleFactor();
+        int attackerWidth = (int)(entity.getImgSize().getWidth() * entity.getScaleFactor());
+        int attackerHeight = (int)(entity.getImgSize().getHeight() * entity.getScaleFactor());
 
         // Check if the mouse click coordinates are within the entity's bounds
         if (mouseX >= attackerX && mouseX <= attackerX + attackerWidth &&

@@ -35,7 +35,7 @@ public class Controllable {
         int height = (int) Math.round(objSize.getHeight());
 
         g.setColor(Color.RED);
-        g.drawRect(x, y, width, height);
+        g.drawRect(x, y, (int)(width * parentObj.getScaleFactor()), (int)(height * parentObj.getScaleFactor()));
     }
 
     public void handleMovement(int keyCode) {

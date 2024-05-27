@@ -1,13 +1,10 @@
 package main;
 
-import bases.NaziBase;
 import dialogBoxes.CreateDialog;
 import dialogBoxes.EditDialogue;
-import entitys.BaseClasses.Infantry;
-import utils.SD;
+import entitys.base.Infantry;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -50,11 +47,8 @@ public class MenuBar extends JMenuBar {
         });
 
         JMenuItem showAll = new JMenuItem("Show All Controllable Entities");
-        showAll.setAction(new AbstractAction("Show All") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                showAll();
-            }
+        showAll.addActionListener((ActionEvent e) -> {
+            showAll();
         });
 
         addEntityMenu.add(addItem);
@@ -66,7 +60,7 @@ public class MenuBar extends JMenuBar {
     }
 
     private void showAll() {
-        ArrayList<Infantry> entityList = gameWorld.getAllControllableEntitiesFromHierarchy();
+        ArrayList<Infantry> entityList = gameWorld.getAllControllableEntities();
 
         StringBuilder message = new StringBuilder("List of Controllable Entities:\n");
 
@@ -82,17 +76,14 @@ public class MenuBar extends JMenuBar {
     }
 
     private void copyEntity() {
-        ArrayList<Infantry> entityList = gameWorld.getAllControllableEntitiesFromHierarchy();
+        ArrayList<Infantry> entityList = gameWorld.getAllControllableEntities();
         for (var entity : entityList) {
-            copyElement(entity);
+            gameWorld.getEntities().add(entity.deepCopy());
         }
-    }
-    private void copyElement(Infantry objToCopy) {
-        gameWorld.getNaziBaseByName(SD.YaltaNaziBase).getEntities().add(objToCopy.deepCopy());
     }
 
     private void editEntity() {
-        ArrayList<Infantry> entityList = gameWorld.getAllControllableEntitiesFromHierarchy();
+        ArrayList<Infantry> entityList = gameWorld.getAllControllableEntities();
         if (entityList.size() == 1) {
             EditDialogue.showEditDialogue(entityList.getFirst());
         } else {

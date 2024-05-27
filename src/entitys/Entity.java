@@ -1,11 +1,8 @@
-// Base Entity class which sets main properties for every entity in the Game
-
 package entitys;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import entitys.BaseClasses.Infantry;
 import utils.Loader;
 import utils.Vector2;
 
@@ -17,13 +14,17 @@ public abstract class Entity implements Cloneable  {
     // Image
     protected String filePath; // from resources\img folder
     protected BufferedImage img;
+    protected BufferedImage originalImg; // Store original image
     protected double scaleFactor;
 
-    public void initializeEntityImgSettings(String filePath, int ScaleFactor) {
+    public void initializeEntityImgSettings(String filePath, double ScaleFactor) {
         this.filePath = filePath; this.scaleFactor = ScaleFactor;
         img = Loader.GetSprite(filePath);
+        originalImg = deepCopyImage(img); // Make a copy of the original image
     }
 
+    public void setImg(BufferedImage newimg) { img = newimg; }
+    public BufferedImage getOriginalImg() { return originalImg; }
     public Dimension getImgSize() { return new Dimension(img.getWidth(), img.getHeight()); }
     public Vector2<Double> getPosition() { return position; }
     public double getVelocity() { return velocity; }

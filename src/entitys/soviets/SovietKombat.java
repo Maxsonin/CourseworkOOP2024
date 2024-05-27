@@ -1,24 +1,24 @@
-package entitys.NaziEntities;
+package entitys.soviets;
 
-import entitys.BaseClasses.Kombat;
+import entitys.base.Kombat;
 import utils.Vector2;
 
 import java.awt.*;
 
-public class NaziKombat extends Kombat {
+public class SovietKombat extends Kombat {
 
-    public NaziKombat(Vector2<Double> position) {
+    public SovietKombat(Vector2<Double> position) {
         super(position);
-        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
-        initializeBaseStats(0.3, 20, 15);
+        initializeEntityImgSettings("soviet/entities/kombat.png", 0.7);
+        initializeBaseStats(-0.1, 20, 15);
         initializeSquadLeaderStats(20, 25);
         initializeKombatStats(10, 25);
     }
 
-    public NaziKombat(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+    public SovietKombat(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
         this.setID(id);
-        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
+        initializeEntityImgSettings("soviet/entities/kombat.png", 0.7);
         initializeBaseStats(velocity, damage, 15);
         controllable.setControllable(isControllable);
     }

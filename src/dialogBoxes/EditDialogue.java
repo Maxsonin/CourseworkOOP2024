@@ -1,6 +1,6 @@
 package dialogBoxes;
 
-import entitys.BaseClasses.Infantry;
+import entitys.base.Infantry;
 
 import javax.swing.*;
 import java.awt.*;

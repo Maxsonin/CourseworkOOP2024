@@ -1,6 +1,6 @@
 // Third Entity in the triple inheritance hierarchy
 
-package entitys.BaseClasses;
+package entitys.base;
 
 import utils.Vector2;
 

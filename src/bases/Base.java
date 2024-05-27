@@ -1,9 +1,11 @@
 package bases;
 
+import entitys.base.Infantry;
 import utils.Vector2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public abstract class Base {
     // Img Settings
@@ -18,6 +20,7 @@ public abstract class Base {
     // Base Setting
     protected Vector2<Double> position;
     protected Vector2<Double> entitySpawnPos;
+    protected ArrayList<Infantry> entities;
 
     public Base(Vector2<Double> position) { this.position = position; }
 
@@ -38,8 +41,17 @@ public abstract class Base {
 
     public String getName() { return name; }
     public Vector2<Double> getEntitySpawnPos() { return entitySpawnPos; }
+    public ArrayList<Infantry> getEntities() { return entities; }
+    
+    public boolean isEntityInsideBase(Infantry entity) {
+        Vector2<Double> entityPos = entity.getPosition();
+        double x = entityPos.getX();
+        double y = entityPos.getY();
 
-    public abstract void addEntity();
+        return x >= position.getX() && x <= position.getX() + img.getWidth() * scaleFactor &&
+                y >= position.getY() && y <= position.getY() + img.getHeight() * scaleFactor;
+    }
+
     public abstract void draw(Graphics g);
     public abstract void update();
 }
