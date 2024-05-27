@@ -46,7 +46,12 @@ public class MenuBar extends JMenuBar {
             copyEntity();
         });
 
-        JMenuItem showAll = new JMenuItem("Show All Controllable Entities");
+        JMenuItem showAllControllable = new JMenuItem("Show All Controllable Entities");
+        showAllControllable.addActionListener((ActionEvent e) -> {
+            showAllControllable();
+        });
+
+        JMenuItem showAll = new JMenuItem("Show All Entities");
         showAll.addActionListener((ActionEvent e) -> {
             showAll();
         });
@@ -59,7 +64,7 @@ public class MenuBar extends JMenuBar {
         return addEntityMenu;
     }
 
-    private void showAll() {
+    private void showAllControllable() {
         ArrayList<Infantry> entityList = gameWorld.getAllControllableEntities();
 
         StringBuilder message = new StringBuilder("List of Controllable Entities:\n");
@@ -72,6 +77,21 @@ public class MenuBar extends JMenuBar {
         } else {
             message.append("None of the Entities are Controllable");
             JOptionPane.showMessageDialog(null, message.toString(), "Controllable Entities", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void showAll() {
+        ArrayList<Infantry> entityList = gameWorld.getEntities();
+
+        StringBuilder message = new StringBuilder("List of All Entities:\n");
+        if (!entityList.isEmpty()) {
+            for (Infantry entity : entityList) {
+                message.append("- ").append(entity.getID()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, message.toString(), "List of Entities", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            message.append("No Entities Created");
+            JOptionPane.showMessageDialog(null, message.toString(), "List of Entities", JOptionPane.WARNING_MESSAGE);
         }
     }
 

@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-public class NaziBase extends Base {
-    public NaziBase(Vector2<Double> position) {
+public class CapturePoint extends Base {
+    public CapturePoint(Vector2<Double> position, String fileName) {
         super(position);
-        InitializeImg("/nazi/bases/base1.png", 0.5);
+        InitializeImg(fileName, 1.7);
         img = Loader.GetSprite(fileName);
 
         entities = new ArrayList<>();

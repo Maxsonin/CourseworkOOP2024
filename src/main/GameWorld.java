@@ -1,7 +1,9 @@
 package main;
 
 import bases.Base;
+import bases.CapturePoint;
 import bases.NaziBase;
+import bases.SovietBase;
 import entitys.base.Infantry;
 import entitys.nazi.NaziInfantry;
 import entitys.nazi.NaziKombat;
@@ -30,25 +32,45 @@ public class GameWorld
     }
 
     public void initBases() {
-        // Macro Objects Initialization
-        bases.add(createNaziBase(new Vector2<>(200.0, 100.0), Color.BLUE, "Werwolf Nazi Base"));
-        bases.add(createNaziBase(new Vector2<>(200.0, 300.0), Color.RED, "Secret Nazi Base in Krasnohrad"));
-        bases.add(createNaziBase(new Vector2<>(200.0, 500.0), Color.YELLOW, "Yalta \"DZIDZIO\" Nazi Base"));
+        // Nazi
+        bases.add(createNaziBase(new Vector2<>(200.0, 100.0), Color.BLUE, SD.WerwolfNaziBase));
+        bases.add(createNaziBase(new Vector2<>(200.0, 300.0), Color.RED, SD.KrasnohradNaziBase));
+        bases.add(createNaziBase(new Vector2<>(200.0, 500.0), Color.YELLOW, SD.YaltaNaziBase));
+
+        // Soviet
+        bases.add(createSovietBase(new Vector2<>(1200.0, 100.0), Color.GREEN, SD.StalingradSovietBase));
+        bases.add(createSovietBase(new Vector2<>(1200.0, 300.0), Color.MAGENTA, SD.ElistaSovietBase));
+        bases.add(createSovietBase(new Vector2<>(1200.0, 500.0), Color.CYAN, SD.KubanSovietBase));
+
+        // Capture Points
+        bases.add(createCapturePoint(new Vector2<>(700.0, 100.0), SD.DonetskCapturePointImgFile, Color.BLACK, SD.DonetskCapturePoint));
+        bases.add(createCapturePoint(new Vector2<>(700.0, 300.0), SD.RostovCapturePointImgFile, Color.ORANGE, SD.RostovCapturePoint));
+        bases.add(createCapturePoint(new Vector2<>(700.0, 500.0), SD.MaikopCapturePointImgFile, Color.PINK, SD.MaikopCapturePoint));
     }
     private NaziBase createNaziBase(Vector2<Double> position, Color color, String name) {
         NaziBase base = new NaziBase(position);
         base.InitializeBaseSettings(color, name);
         return base;
     }
+    private SovietBase createSovietBase(Vector2<Double> position, Color color, String name) {
+        SovietBase base = new SovietBase(position);
+        base.InitializeBaseSettings(color, name);
+        return base;
+    }
+    private CapturePoint createCapturePoint(Vector2<Double> position, String img, Color color, String name) {
+        CapturePoint base = new CapturePoint(position, img);
+        base.InitializeBaseSettings(color, name);
+        return base;
+    }
 
     public void InnitEntities() {
-        entities.add(new NaziKombat(new Vector2<>(100.0, 100.0)));
-        entities.add(new NaziSquadLeader(new Vector2<>(100.0, 300.0)));
-        entities.add(new NaziInfantry(new Vector2<>(100.0, 500.0)));
+        entities.add(new NaziKombat(new Vector2<>(200.0, 100.0)));
+        entities.add(new NaziSquadLeader(new Vector2<>(200.0, 300.0)));
+        entities.add(new NaziInfantry(new Vector2<>(200.0, 500.0)));
 
-        entities.add(new SovietKombat(new Vector2<>(500.0, 100.0)));
-        entities.add(new SovietSquadLeader(new Vector2<>(500.0, 300.0)));
-        entities.add(new SovietInfantry(new Vector2<>(500.0, 500.0)));
+        entities.add(new SovietKombat(new Vector2<>(1300.0, 100.0)));
+        entities.add(new SovietSquadLeader(new Vector2<>(1300.0, 300.0)));
+        entities.add(new SovietInfantry(new Vector2<>(1300.0, 500.0)));
     }
 
     public void manageEntitiesToBases() {

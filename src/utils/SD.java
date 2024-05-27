@@ -14,6 +14,17 @@ public class SD {
     public static final String KrasnohradNaziBase = "Secret Nazi Base in Krasnohrad";
     public static final String YaltaNaziBase = "Yalta \"DZIDZIO\" Nazi Base";
 
+    public static final String StalingradSovietBase = "Stalingrad Soviet Base";
+    public static final String ElistaSovietBase = "Elista Soviet Base";
+    public static final String KubanSovietBase = "Kuban Soviet Base";
+
+    public static final String RostovCapturePoint = "Rostov Capture Point";
+    public static final String RostovCapturePointImgFile = "/bases/point1.png";
+    public static final String DonetskCapturePoint = "Donetsk Capture Point";
+    public static final String DonetskCapturePointImgFile = "/bases/point2.png";
+    public static final String MaikopCapturePoint = "Maikop Capture Point";
+    public static final String MaikopCapturePointImgFile = "/bases/point3.png";
+
     // Types of Entities
     public static final String Infantry = "Infantry";
     public static final String SquadLeader = "Squad Leader";
