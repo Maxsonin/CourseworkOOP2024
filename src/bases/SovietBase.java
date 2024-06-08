@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class SovietBase extends Base {
     public SovietBase(Vector2<Double> position) {
         super(position);
-        InitializeImg("/soviet/bases/base1.png", 0.7);
+        InitializeImg("/soviet/bases/base1.png", 0.3);
         img = Loader.GetSprite(fileName);
 
         entities = new ArrayList<>();

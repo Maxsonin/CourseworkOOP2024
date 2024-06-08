@@ -16,8 +16,6 @@ public abstract class Kombat extends SquadLeader {
         this.ultraAttackDamage = ultraAttackDamage; this.ultraAttackRadius = ultraAttackRadius;
     }
 
-   public abstract void kombatAttack();
-
     @Override
     public Kombat deepCopy() {
         Kombat copy = (Kombat) super.deepCopy(); // Invoke deep copy of SquadLeader

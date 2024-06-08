@@ -30,6 +30,9 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 break;
             }
         }
+
+       gameWorld.getMap().setScalePercentage(0.5, gameWorld);
+
     }
 
     // Helper method to check if a click is within the bounds of an entity
@@ -51,7 +54,9 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+         //gameWorld.getMap().moveViewRight(gameWorld);
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) { }

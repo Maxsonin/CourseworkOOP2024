@@ -1,6 +1,7 @@
 package components;
 
 import entitys.Entity;
+import utils.Vector2;
 
 import java.awt.*;
 
@@ -12,6 +13,8 @@ public class HealthStats {
 
     private float textSize = 15f;
     private Color barColor = null; // New field to store the current health bar color
+
+    private Vector2<Integer> barPos;
 
     public HealthStats(Entity parentObj, int maxHealth) {
         this.parentObj = parentObj;
@@ -25,7 +28,7 @@ public class HealthStats {
         Font originalFont = g.getFont();
 
         // Derive a new font with size 14 and bold style
-        Font newFont = originalFont.deriveFont(Font.BOLD, (float)(textSize * parentObj.getScaleFactor() / 1.2));
+        Font newFont = originalFont.deriveFont(Font.BOLD, textSize * (float) Math.ceil(parentObj.getScaleFactor()));
         g.setFont(newFont);
 
         FontMetrics fm = g.getFontMetrics();
@@ -40,18 +43,11 @@ public class HealthStats {
 
         int barPosX = (int) Math.round(parentObj.getPosition().getX() - (double) barAdditionalSize / 2);
         int barPosY = (int) Math.round(parentObj.getPosition().getY() - fm.getHeight());
+        barPos = new Vector2<>(barPosX, barPosY);
 
         // Set color based on health or use custom color if set
         if (barColor != null) {
             g.setColor(barColor);
-        } else {
-            if (health <= maxHealth * 0.25) {
-                g.setColor(Color.RED);
-            } else if (health <= maxHealth * 0.75) {
-                g.setColor(Color.YELLOW);
-            } else {
-                g.setColor(Color.GREEN);
-            }
         }
 
         // Draw HP Bar
@@ -94,4 +90,6 @@ public class HealthStats {
     public Color getBarColor() {
         return barColor;
     }
+
+    public Vector2<Integer> getBarPosition() { return barPos; }
 }

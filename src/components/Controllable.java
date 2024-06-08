@@ -46,19 +46,15 @@ public class Controllable {
         switch (keyCode) {
             case KeyEvent.VK_UP:
                 objPosition.moveY(-velocityInControllable);
-                System.out.println("Up");
                 break;
             case KeyEvent.VK_DOWN:
                 objPosition.moveY(velocityInControllable);
-                System.out.println("Down");
                 break;
             case KeyEvent.VK_LEFT:
                 objPosition.moveX(-velocityInControllable);
-                System.out.println("Left");
                 break;
             case KeyEvent.VK_RIGHT:
                 objPosition.moveX(velocityInControllable);
-                System.out.println("Right");
                 break;
         }
     }

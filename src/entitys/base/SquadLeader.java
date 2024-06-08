@@ -17,8 +17,6 @@ public abstract class SquadLeader extends Infantry {
         this.megaAttackRadius = megaAttackRadius;
     }
 
-    public abstract void squadLeaderAttack();
-
     @Override
     public SquadLeader deepCopy() {
         SquadLeader copy = (SquadLeader) super.deepCopy(); // Invoke deep copy of Infantry

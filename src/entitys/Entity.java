@@ -3,6 +3,7 @@ package entitys;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import main.GameWorld;
 import utils.Loader;
 import utils.Vector2;
 
@@ -38,8 +39,8 @@ public abstract class Entity implements Cloneable  {
 
     public void setVelocity(double velocity) { this.velocity = velocity; }
 
-    public abstract void move();
-    public abstract void update();
+    public abstract void move(GameWorld gameWorld);
+    public abstract void update(GameWorld gameWorld);
     public abstract void draw(Graphics g);
 
     public Entity deepCopy() {

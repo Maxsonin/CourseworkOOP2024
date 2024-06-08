@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class EditDialogue {
+public class EditDialog {
     public static void showEditDialogue(Infantry entityToEdit) {
 
         JFrame frame = new JFrame("Edit Entity");

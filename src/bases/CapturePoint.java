@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class CapturePoint extends Base {
     public CapturePoint(Vector2<Double> position, String fileName) {
         super(position);
-        InitializeImg(fileName, 1.7);
+        InitializeImg(fileName, 0.7);
         img = Loader.GetSprite(fileName);
 
         entities = new ArrayList<>();

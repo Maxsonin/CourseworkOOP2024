@@ -19,10 +19,15 @@ public abstract class Base {
 
     // Base Setting
     protected Vector2<Double> position;
+    protected Vector2<Double> initialPosition;
     protected Vector2<Double> entitySpawnPos;
     protected ArrayList<Infantry> entities;
 
-    public Base(Vector2<Double> position) { this.position = position; }
+    public Base(Vector2<Double> position) {
+        this.position = position;
+        this.initialPosition = position;
+        entitySpawnPos = new Vector2<>(position.getX() + 50,position.getY() + 50); // random values of base center
+    }
 
     public void InitializeImg(String fileName, double scaleFactor) {
         this.fileName = fileName;
@@ -42,7 +47,12 @@ public abstract class Base {
     public String getName() { return name; }
     public Vector2<Double> getEntitySpawnPos() { return entitySpawnPos; }
     public ArrayList<Infantry> getEntities() { return entities; }
-    
+    public Vector2<Double> getPosition() { return position; }
+    public Vector2<Double> getInitialPosition() { return initialPosition; }
+    public void setNewPosition(Vector2<Double> newPosition) { position =  newPosition; }
+    public void setScaleFactor(double newScaleFactor) { scaleFactor = newScaleFactor; }
+    public double getScaleFactor() { return scaleFactor; }
+
     public boolean isEntityInsideBase(Infantry entity) {
         Vector2<Double> entityPos = entity.getPosition();
         double x = entityPos.getX();
@@ -51,6 +61,7 @@ public abstract class Base {
         return x >= position.getX() && x <= position.getX() + img.getWidth() * scaleFactor &&
                 y >= position.getY() && y <= position.getY() + img.getHeight() * scaleFactor;
     }
+
 
     public abstract void draw(Graphics g);
     public abstract void update();

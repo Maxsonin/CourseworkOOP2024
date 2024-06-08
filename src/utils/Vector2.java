@@ -35,6 +35,12 @@ public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Clonea
         throw new IllegalArgumentException("Unsupported number type");
     }
 
+    public double distanceTo(Vector2<T> other) {
+        double dx = other.getX().doubleValue() - this.getX().doubleValue();
+        double dy = other.getY().doubleValue() - this.getY().doubleValue();
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,7 +53,7 @@ public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Clonea
     public int hashCode() { return Objects.hash(x, y); }
 
     @Override
-    public String toString() { return String.format("Vector2{x=%s, y=%s}", x, y); }
+    public String toString() { return String.format("Vector2{ x = %s, y = %s }", x, y); }
 
     @Override
     public int compareTo(Vector2<T> other) {
