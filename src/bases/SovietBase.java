@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class SovietBase extends Base {
     public SovietBase(Vector2<Double> position) {
         super(position);
-        InitializeImg("/soviet/bases/base1.png", 0.3);
+        InitializeImg("/soviet/bases/base1.png", 0.5);
         img = Loader.GetSprite(fileName);
 
         entities = new ArrayList<>();
@@ -37,6 +37,8 @@ public class SovietBase extends Base {
 
     @Override
     public void update() {
+        entitySpawnPos = new Vector2<>(position.getX() + 50,position.getY() + 50); // random values of base center
+
         for (var entity : entities) {
             entity.changeHealthColor(color);
         }

@@ -51,7 +51,7 @@ public class Game implements Runnable {
             previousTime = currentTime;
 
             if (deltaU >= 1) {
-                gameWorld.Update();
+                gameWorld.update();
                 updates++;
                 deltaU--;
             }

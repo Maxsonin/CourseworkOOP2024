@@ -311,6 +311,8 @@ public class MenuBar extends JMenuBar {
         shortcuts.add("DELETE - delete all Controllable Entities");
         shortcuts.add("ESCAPE - UnControll all Controllable Entities");
         shortcuts.add("T - Test if Keyboard is Working");
+        shortcuts.add("WASD - Move view");
+        shortcuts.add("H - move all entities to main base");
 
         StringBuilder message = new StringBuilder("List of Shortcuts:\n");
         for (String shortcut : shortcuts) {

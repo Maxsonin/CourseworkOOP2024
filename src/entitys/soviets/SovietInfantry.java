@@ -14,20 +14,20 @@ public class SovietInfantry extends Infantry {
     public SovietInfantry(Vector2<Double> position) {
         super(position);
         initializeEntityImgSettings("soviet/entities/infantry.png", 0.7);
-        initializeBaseStats(0.5, 20, 100, 1000);
+        initializeBaseStats(0.5, 5, 100, 1000);
     }
 
     public SovietInfantry(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
         this.setID(id);
         initializeEntityImgSettings("soviet/entities/infantry.png", 0.7);
-        initializeBaseStats(velocity, damage, 15, 1000);
+        initializeBaseStats(velocity, damage, 100, 500);
         controllable.setControllable(isControllable);
     }
 
     @Override
     public void move(GameWorld gameWorld) {
-        if (!needToAttack) {
+        if (!needToAttack && !needToGoToTargetBase) {
             ArrayList<Base> bases = gameWorld.getBases();
             if (bases.isEmpty()) {
                 return;
@@ -38,7 +38,7 @@ public class SovietInfantry extends Infantry {
             target = bases.get(random.nextInt(bases.size()));
             needToAttack = true;
         }
-        else
+        else if (needToAttack && !needToGoToTargetBase)
         {
             // Calculate the direction vector
             double directionX = target.getEntitySpawnPos().getX() - position.getX();
@@ -60,6 +60,9 @@ public class SovietInfantry extends Infantry {
             if (magnitude == 0 || magnitude <= 1) { // include measurement error
                 needToAttack = false;
             }
+        }
+        else if (needToGoToTargetBase) {
+            moveToTargetBase();
         }
     }
 

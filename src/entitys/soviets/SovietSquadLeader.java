@@ -22,13 +22,13 @@ public class SovietSquadLeader extends SquadLeader {
         super(position);
         this.setID(id);
         initializeEntityImgSettings("soviet/entities/squadLeader.png", 0.7);
-        initializeBaseStats(velocity, damage, 15, 1000);
+        initializeBaseStats(velocity, damage, 150, 1000);
         controllable.setControllable(isControllable);
     }
 
     @Override
     public void move(GameWorld gameWorld) {
-        if (!needToAttack) {
+        if (!needToAttack && !needToGoToTargetBase) {
             ArrayList<Base> bases = gameWorld.getBases();
             if (bases.isEmpty()) {
                 return;
@@ -39,7 +39,7 @@ public class SovietSquadLeader extends SquadLeader {
             target = bases.get(random.nextInt(bases.size()));
             needToAttack = true;
         }
-        else
+        else if (needToAttack && !needToGoToTargetBase)
         {
             // Calculate the direction vector
             double directionX = target.getEntitySpawnPos().getX() - position.getX();
@@ -61,6 +61,9 @@ public class SovietSquadLeader extends SquadLeader {
             if (magnitude == 0 || magnitude <= 1) { // include measurement error
                 needToAttack = false;
             }
+        }
+        else if (needToGoToTargetBase) {
+            moveToTargetBase();
         }
     }
 

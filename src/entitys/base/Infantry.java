@@ -7,7 +7,6 @@ import components.Controllable;
 import components.HealthStats;
 import entitys.Entity;
 import main.GameWorld;
-import utils.SD;
 import utils.Vector2;
 
 import java.awt.*;
@@ -16,8 +15,9 @@ import java.util.Random;
 
 public abstract class Infantry extends Entity {
     // Entity movement
-    public boolean needToAttack = false;
-    public Base target;
+    protected boolean needToAttack = false;
+    protected boolean needToGoToTargetBase = false;
+    protected Base target;
 
     // Components
     protected Controllable controllable;
@@ -50,6 +50,43 @@ public abstract class Infantry extends Entity {
     public void setID(String ID) { this.ID = ID; }
     public int getSightRadius() { return sightRadius; }
     public void setNewPosition(Vector2<Double> newPosition) { position = newPosition; }
+
+    public void setNeedToGoToTargetBase(boolean needToGoToTargetBase) {
+        this.needToGoToTargetBase = needToGoToTargetBase;
+    }
+
+    public boolean isNeedToGoToTargetBase() {
+        return needToGoToTargetBase;
+    }
+
+    public Base getTarget() {
+        return target;
+    }
+
+    public void setTarget(Base target) {
+        this.target = target;
+    }
+
+    public void moveToTargetBase() {
+            // Calculate the direction vector
+            double directionX = target.getEntitySpawnPos().getX() - position.getX();
+            double directionY = target.getEntitySpawnPos().getY() - position.getY();
+
+            // Normalize the direction vector
+            double magnitude = Math.sqrt(directionX * directionX + directionY * directionY);
+            double unitDirectionX = directionX / magnitude;
+            double unitDirectionY = directionY / magnitude;
+
+            // Calculate the movement vector
+            double moveX = unitDirectionX * velocity;
+            double moveY = unitDirectionY * velocity;
+
+            if (magnitude != 0 && magnitude >= 1) { // include measurement error
+                // Update the entity's position
+                position.setX(position.getX() + moveX);
+                position.setY(position.getY() + moveY);
+            }
+    }
 
     // Static initialization block
     static {

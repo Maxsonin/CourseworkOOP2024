@@ -14,7 +14,7 @@ public class NaziInfantry extends Infantry {
     public NaziInfantry(Vector2<Double> position) {
         super(position);
         initializeEntityImgSettings("nazi/entities/infantry.png", 1);
-        initializeBaseStats(0.5, 20, 150, 1000);
+        initializeBaseStats(0.5, 15, 150, 1000);
     }
 
     public NaziInfantry(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
@@ -27,7 +27,7 @@ public class NaziInfantry extends Infantry {
 
     @Override
     public void move(GameWorld gameWorld) {
-        if (!needToAttack) {
+        if (!needToAttack && !needToGoToTargetBase) {
             ArrayList<Base> bases = gameWorld.getBases();
             if (bases.isEmpty()) {
                 return;
@@ -38,7 +38,7 @@ public class NaziInfantry extends Infantry {
             target = bases.get(random.nextInt(bases.size()));
             needToAttack = true;
         }
-        else
+        else if (needToAttack && !needToGoToTargetBase)
         {
             // Calculate the direction vector
             double directionX = target.getEntitySpawnPos().getX() - position.getX();
@@ -60,6 +60,9 @@ public class NaziInfantry extends Infantry {
             if (magnitude == 0 || magnitude <= 1) { // include measurement error
                 needToAttack = false;
             }
+        }
+        else if (needToGoToTargetBase) {
+            moveToTargetBase();
         }
     }
 

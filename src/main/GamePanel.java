@@ -31,6 +31,6 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        gameWorld.Render(g);
+        gameWorld.render(g);
     }
 }

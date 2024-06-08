@@ -33,6 +33,10 @@ public class SD {
         public static final String MaikopCapturePointImgFile = "bases/point3.png";
     //
 
+    // Main Bases for Each Team
+    public static final String MainNaziBase = WerwolfNaziBase;
+    public static final String MainSovietBase = StalingradSovietBase;
+
     // Types of Entities
     public static final String Infantry = "Infantry";
     public static final String SquadLeader = "Squad Leader";

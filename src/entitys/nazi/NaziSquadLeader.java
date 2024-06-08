@@ -14,7 +14,7 @@ public class NaziSquadLeader extends SquadLeader {
     public NaziSquadLeader(Vector2<Double> position) {
         super(position);
         initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
-        initializeBaseStats(0.3, 20, 100, 1000);
+        initializeBaseStats(0.3, 25, 100, 1000);
         initializeSquadLeaderStats(20, 25);
     }
 
@@ -22,13 +22,13 @@ public class NaziSquadLeader extends SquadLeader {
         super(position);
         this.setID(id);
         initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
-        initializeBaseStats(velocity, damage, 15, 1000);
+        initializeBaseStats(velocity, damage, 100, 1000);
         controllable.setControllable(isControllable);
     }
 
     @Override
     public void move(GameWorld gameWorld) {
-        if (!needToAttack) {
+        if (!needToAttack && !needToGoToTargetBase) {
             ArrayList<Base> bases = gameWorld.getBases();
             if (bases.isEmpty()) {
                 return;
@@ -39,7 +39,7 @@ public class NaziSquadLeader extends SquadLeader {
             target = bases.get(random.nextInt(bases.size()));
             needToAttack = true;
         }
-        else
+        else if (needToAttack && !needToGoToTargetBase)
         {
             // Calculate the direction vector
             double directionX = target.getEntitySpawnPos().getX() - position.getX();
@@ -61,6 +61,9 @@ public class NaziSquadLeader extends SquadLeader {
             if (magnitude == 0 || magnitude <= 1) { // include measurement error
                 needToAttack = false;
             }
+        }
+        else if (needToGoToTargetBase) {
+            moveToTargetBase();
         }
     }
 

@@ -3,7 +3,6 @@
 package inputs;
 
 import bases.Base;
-import bases.NaziBase;
 import dialogBoxes.CreateDialog;
 import entitys.base.Infantry;
 import main.GameWorld;
@@ -21,19 +20,13 @@ public class KeyboardInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         Map map = gameWorld.getMap();
-
 
         ArrayList<Infantry> controllableEntitiesFromHierarchy = gameWorld.getAllControllableEntities();
 
         int keyCode = e.getKeyCode();
-        for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
-            activatedEntity.getControllableComponent().handleMovement(keyCode);
-        }
-
+        for (Infantry activatedEntity : controllableEntitiesFromHierarchy) { activatedEntity.getControllableComponent().handleMovement(keyCode); }
         switch (keyCode) {
-            // Test if keyboard is responding
             case KeyEvent.VK_T:
                 System.out.println("Keyboard is responding!");
                 break;
@@ -63,14 +56,8 @@ public class KeyboardInputs implements KeyListener {
                 }
                 break;
 
-            case KeyEvent.VK_1:
-                map.setScalePercentage(1, gameWorld);
-                break;
-            case KeyEvent.VK_2:
-                map.setScalePercentage(0.75, gameWorld);
-                break;
-            case KeyEvent.VK_3:
-                map.setScalePercentage(0.5, gameWorld);
+            case KeyEvent.VK_H:
+                gameWorld.moveEntitiesToMainBase();
                 break;
 
             case KeyEvent.VK_W:

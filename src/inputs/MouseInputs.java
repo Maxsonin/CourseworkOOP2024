@@ -13,12 +13,9 @@ import java.util.ArrayList;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
 
-    private GameWorld gameWorld;
-
     private ArrayList<Infantry> entities;
 
     public MouseInputs(GameWorld gameWorld) {
-        this.gameWorld = gameWorld;
         entities = gameWorld.getEntities();
     }
 
@@ -30,9 +27,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
                 break;
             }
         }
-
-       gameWorld.getMap().setScalePercentage(0.5, gameWorld);
-
     }
 
     // Helper method to check if a click is within the bounds of an entity
@@ -54,9 +48,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-         //gameWorld.getMap().moveViewRight(gameWorld);
-    }
+    public void mousePressed(MouseEvent e) { }
 
     @Override
     public void mouseReleased(MouseEvent e) { }

@@ -1,6 +1,7 @@
 package bases;
 
 import entitys.base.Infantry;
+import javafx.scene.Node;
 import utils.Vector2;
 
 import java.awt.*;

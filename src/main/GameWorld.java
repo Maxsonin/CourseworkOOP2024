@@ -21,17 +21,18 @@ import java.util.Iterator;
 
 public class GameWorld
 {
-    private Map map = new Map();;
+    // Main Fields
+    private Map map = new Map();
 
     private ArrayList<Base> bases = new ArrayList<>();
     private ArrayList<Infantry> entities = new ArrayList<>();
 
+    // Initializers
     public GameWorld() {
-        initBases();
-        InnitEntities();
+        initializeBases();
+        initializeEntities();
     }
-
-    public void InnitEntities() {
+    private void initializeEntities() {
         // Nazi
         entities.add(new NaziKombat(new Vector2<>(200.0, 100.0)));
         entities.add(new NaziSquadLeader(new Vector2<>(200.0, 300.0)));
@@ -42,23 +43,61 @@ public class GameWorld
         entities.add(new SovietSquadLeader(new Vector2<>(1300.0, 300.0)));
         entities.add(new SovietInfantry(new Vector2<>(1300.0, 500.0)));
     }
-
-    public void initBases() {
+    private void initializeBases() {
         // Nazi
-        bases.add(createNaziBase(new Vector2<>(150.0, 400.0), Color.BLUE, SD.WerwolfNaziBase));
-        bases.add(createNaziBase(new Vector2<>(500.0, 250.0), Color.RED, SD.KrasnohradNaziBase));
-        bases.add(createNaziBase(new Vector2<>(400.0, 800.0), Color.YELLOW, SD.YaltaNaziBase));
+        bases.add(createNaziBase(new Vector2<>(150.0, 1100.0), Color.BLUE, SD.WerwolfNaziBase));
+        bases.add(createNaziBase(new Vector2<>(1100.0, 450.0), Color.RED, SD.KrasnohradNaziBase));
+        bases.add(createNaziBase(new Vector2<>(1000.0, 1600.0), Color.YELLOW, SD.YaltaNaziBase));
 
         // Soviet
-        bases.add(createSovietBase(new Vector2<>(1250.0, 200.0), Color.GREEN, SD.StalingradSovietBase));
-        bases.add(createSovietBase(new Vector2<>(1350.0, 500.0), Color.MAGENTA, SD.ElistaSovietBase));
-        bases.add(createSovietBase(new Vector2<>(1200.0, 800.0), Color.CYAN, SD.KubanSovietBase));
+        bases.add(createSovietBase(new Vector2<>(2900.0, 500.0), Color.GREEN, SD.StalingradSovietBase));
+        bases.add(createSovietBase(new Vector2<>(2850.0, 1000.0), Color.MAGENTA, SD.ElistaSovietBase));
+        bases.add(createSovietBase(new Vector2<>(2600.0, 1400.0), Color.CYAN, SD.KubanSovietBase));
 
         // Capture Points
-        bases.add(createCapturePoint(new Vector2<>(900.0, 300.0), SD.DonetskCapturePointImgFile, Color.BLACK, SD.DonetskCapturePoint));
-        bases.add(createCapturePoint(new Vector2<>(800.0, 500.0), SD.RostovCapturePointImgFile, Color.ORANGE, SD.RostovCapturePoint));
-        bases.add(createCapturePoint(new Vector2<>(950.0, 750.0), SD.MaikopCapturePointImgFile, Color.PINK, SD.MaikopCapturePoint));
+        bases.add(createCapturePoint(new Vector2<>(1900.0, 600.0), SD.DonetskCapturePointImgFile, Color.BLACK, SD.DonetskCapturePoint));
+        bases.add(createCapturePoint(new Vector2<>(1800.0, 900.0), SD.RostovCapturePointImgFile, Color.ORANGE, SD.RostovCapturePoint));
+        bases.add(createCapturePoint(new Vector2<>(2000.0, 1600.0), SD.MaikopCapturePointImgFile, Color.PINK, SD.MaikopCapturePoint));
     }
+
+    // Getters&Setters
+    public Map getMap() { return map; }
+    public ArrayList<Base> getBases() { return bases; }
+    public ArrayList<Infantry> getEntities() { return entities; }
+    public ArrayList<Infantry> getEntitiesThatAreInBase() {
+        ArrayList<Infantry> entitiesThatAreInBase = new ArrayList<>();
+        for (Base base : bases) {
+            entitiesThatAreInBase.addAll(base.getEntities());
+        }
+        return entitiesThatAreInBase;
+    }
+    public ArrayList<Infantry> getEntitiesThatAreNOTInBase() {
+        ArrayList<Infantry> entitiesThatAreInBase = getEntitiesThatAreInBase();
+        ArrayList<Infantry> entitiesNotInBase = new ArrayList<>(entities);
+        entitiesNotInBase.removeAll(entitiesThatAreInBase);
+        return entitiesNotInBase;
+    }
+    public ArrayList<Infantry> getAllControllableEntities() {
+        ArrayList<Infantry> allControllableEntities = new ArrayList<>();
+
+        for (Infantry entity : entities) {
+            if (entity.getControllableComponent().isControllable()) {
+                allControllableEntities.add(entity);
+            }
+        }
+
+        return allControllableEntities;
+    }
+    public Base getBaseByName(String baseName) {
+        for (Base base : bases) {
+            if (base.getName().equalsIgnoreCase(baseName)) {
+                return base;
+            }
+        }
+        return null;
+    }
+
+    // Helper Methods
     private NaziBase createNaziBase(Vector2<Double> position, Color color, String name) {
         NaziBase base = new NaziBase(position);
         base.InitializeBaseSettings(color, name);
@@ -75,16 +114,8 @@ public class GameWorld
         return base;
     }
 
-    public Base getBaseByName(String baseName) {
-        for (Base base : bases) {
-            if (base.getName().equalsIgnoreCase(baseName)) {
-                return base;
-            }
-        }
-        return null;
-    }
-
-    public void manageEntitiesToBases() {
+    // Methods
+    private void manageEntitiesToBeAddedOrRemovedFromBases() {
         for (Base base : bases) {
             for (Infantry entity : entities) {
                 if (!base.getEntities().contains(entity)) {
@@ -95,6 +126,29 @@ public class GameWorld
                     if (!base.isEntityInsideBase(entity)) {
                         base.getEntities().remove(entity);
                     }
+                }
+            }
+        }
+    }
+    private void checkIfAnyEntityIsDeadAndRemoveIt() {
+        Iterator<Infantry> iterator = entities.iterator();
+        while (iterator.hasNext()) {
+            Infantry entity = iterator.next();
+            if (entity.getHP() <= 0) {
+                iterator.remove(); // Safe removal using iterator
+            }
+        }
+    }
+
+    public void moveEntitiesToMainBase() {
+        for (var entity : entities) {
+            entity.setNeedToGoToTargetBase(!entity.isNeedToGoToTargetBase());
+            if (entity.isNeedToGoToTargetBase()) {
+                if (entity.getClass().toString().contains(SD.Soviet)) {
+                    entity.setTarget(getBaseByName(SD.MainSovietBase));
+                }
+                else if (entity.getClass().toString().contains(SD.Nazi)) {
+                    entity.setTarget(getBaseByName(SD.MainNaziBase));
                 }
             }
         }
@@ -131,46 +185,9 @@ public class GameWorld
         }
     }
 
-    public Map getMap() { return map; }
-    public ArrayList<Base> getBases() { return bases; }
-    public ArrayList<Infantry> getEntities() { return entities; }
-    public ArrayList<Infantry> getEntitiesThatAreInBase() {
-        ArrayList<Infantry> entitiesThatAreInBase = new ArrayList<>();
-        for (Base base : bases) {
-            entitiesThatAreInBase.addAll(base.getEntities());
-        }
-        return entitiesThatAreInBase;
-    }
-    public ArrayList<Infantry> getEntitiesThatAreNOTInBase() {
-        ArrayList<Infantry> entitiesThatAreInBase = getEntitiesThatAreInBase();
-        ArrayList<Infantry> entitiesNotInBase = new ArrayList<>(entities);
-        entitiesNotInBase.removeAll(entitiesThatAreInBase);
-        return entitiesNotInBase;
-    }
-    public ArrayList<Infantry> getAllControllableEntities() {
-        ArrayList<Infantry> allControllableEntities = new ArrayList<>();
-
-        for (Infantry entity : entities) {
-            if (entity.getControllableComponent().isControllable()) {
-                allControllableEntities.add(entity);
-            }
-        }
-
-        return allControllableEntities;
-    }
-
-    private void checkBodies() {
-        Iterator<Infantry> iterator = entities.iterator();
-        while (iterator.hasNext()) {
-            Infantry entity = iterator.next();
-            if (entity.getHP() <= 0) {
-                iterator.remove(); // Safe removal using iterator
-            }
-        }
-    }
-
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         map.draw(g);
+
         for (var base : bases) {
             base.draw(g);
         }
@@ -180,15 +197,16 @@ public class GameWorld
         }
     }
 
-    public void Update() {
+    public void update() {
         map.update();
 
-        checkBodies();
-        manageEntitiesToBases();
+        checkIfAnyEntityIsDeadAndRemoveIt();
 
-        for (var n : entities) {
-            n.changeHealthColor(Color.green);
-            n.update(this);
+        manageEntitiesToBeAddedOrRemovedFromBases();
+
+        for (var entity : entities) {
+            entity.changeHealthColor(Color.green);
+            entity.update(this);
         }
 
         for (var base : bases) {
@@ -196,6 +214,7 @@ public class GameWorld
         }
     }
 
+    // Map Related Methods
     public void moveDown(double amount) {
         for (var base : bases) {
             base.getPosition().moveY(-amount);
@@ -205,7 +224,6 @@ public class GameWorld
             entity.getPosition().moveY(-amount);
         }
     }
-
     public void moveRight(double amount) {
         for (var base : bases) {
             base.getPosition().moveX(-amount);
@@ -215,7 +233,6 @@ public class GameWorld
             entity.getPosition().moveX(-amount);
         }
     }
-
     public void moveLeft(double amount) {
         for (var base : bases) {
             base.getPosition().moveX(amount);
@@ -225,7 +242,6 @@ public class GameWorld
             entity.getPosition().moveX(amount);
         }
     }
-
     public void moveUp(double amount) {
         for (var base : bases) {
             base.getPosition().moveY(amount);

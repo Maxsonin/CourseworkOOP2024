@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 public class CapturePoint extends Base {
     public CapturePoint(Vector2<Double> position, String fileName) {
         super(position);
-        InitializeImg(fileName, 0.7);
+        InitializeImg(fileName, 1.2);
         img = Loader.GetSprite(fileName);
 
         entities = new ArrayList<>();
@@ -37,6 +37,8 @@ public class CapturePoint extends Base {
 
     @Override
     public void update() {
+        entitySpawnPos = new Vector2<>(position.getX() + 50,position.getY() + 50); // random values of base center
+
         for (var entity : entities) {
             entity.changeHealthColor(color);
         }
