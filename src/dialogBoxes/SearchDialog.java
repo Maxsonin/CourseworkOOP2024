@@ -73,17 +73,28 @@ public class SearchDialog {
 
     private void searchEntity(String id, String selectedTeam, String selectedClass, int HP) {
         ArrayList<Base> bases = gameWorld.getBases();
+        Infantry foundedEntity = null; ArrayList<Base> basesThatContainsEntity = new ArrayList<>();
+
         for (var base : bases) {
             for (var entity : base.getEntities()) {
                 if (isValid(entity, id, selectedTeam, selectedClass, HP)) {
-                        StringBuilder message = new StringBuilder("Found Element: ");
-                        message.append(entity);
-                        message.append("Base: = " + base.getName());
-                        JOptionPane.showMessageDialog(null, message.toString(), "Found Element", JOptionPane.INFORMATION_MESSAGE);
-                        return;
-                    }
+                    foundedEntity  = entity;
+                    basesThatContainsEntity.add(base);
                 }
             }
+        }
+
+        if (foundedEntity != null) {
+            StringBuilder message = new StringBuilder("Found Element: ");
+            message.append(foundedEntity);
+            message.append("Bases: ");
+            for (var base : basesThatContainsEntity) {
+                message.append(base.getName() + "\n");
+            }
+
+            JOptionPane.showMessageDialog(null, message.toString(), "Found Element", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
         ArrayList<Infantry> nonBaseEntities = gameWorld.getEntitiesThatAreNOTInBase();
         for (var entity : nonBaseEntities) {

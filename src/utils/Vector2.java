@@ -24,7 +24,7 @@ public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Clonea
         y = (T) addNumbers(y, increment);
     }
 
-    private Number addNumbers(Number a, Number b) {
+    private Number addNumbers(Number a, Number b) { // Requirement №12
         if (a instanceof Integer) {
             return a.intValue() + b.intValue();
         } else if (a instanceof Double) {
@@ -42,7 +42,7 @@ public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Clonea
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) { // Requirement №5
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vector2<?> vector2 = (Vector2<?>) o;
@@ -53,7 +53,7 @@ public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Clonea
     public int hashCode() { return Objects.hash(x, y); }
 
     @Override
-    public String toString() { return String.format("Vector2{ x = %s, y = %s }", x, y); }
+    public String toString() { return String.format("Vector2{ x = %s, y = %s }", x, y); } // Requirement №5
 
     @Override
     public int compareTo(Vector2<T> other) {

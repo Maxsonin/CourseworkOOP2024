@@ -41,7 +41,7 @@ public class GameWorld
         // Soviet
         entities.add(new SovietKombat(new Vector2<>(1300.0, 100.0)));
         entities.add(new SovietSquadLeader(new Vector2<>(1300.0, 300.0)));
-        entities.add(new SovietInfantry(new Vector2<>(1300.0, 500.0)));
+        entities.add(new SovietInfantry(new Vector2<>(1000.0, 200.0)));
     }
     private void initializeBases() {
         // Nazi
@@ -115,11 +115,11 @@ public class GameWorld
     }
 
     // Methods
-    private void manageEntitiesToBeAddedOrRemovedFromBases() {
+    private void manageEntitiesToBeAddedOrRemovedFromBases() { // Requirement №36
         for (Base base : bases) {
             for (Infantry entity : entities) {
-                if (!base.getEntities().contains(entity)) {
-                    if (base.isEntityInsideBase(entity)) {
+                if (!entity.isNeedToGoToTargetBase() && !base.getEntities().contains(entity)) { // Requirement №37 (Retreating they will skip all bases to fast changes on the field)
+                    if (base.isEntityInsideBase(entity) && base.getEntities().size() < base.getBaseCapacity()) { // Requirement №15
                         base.getEntities().add(entity);
                     }
                 } else {
@@ -185,7 +185,7 @@ public class GameWorld
         }
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g) { // Requirement №10 Dynamic Polymorphism
         map.draw(g);
 
         for (var base : bases) {
@@ -205,7 +205,6 @@ public class GameWorld
         manageEntitiesToBeAddedOrRemovedFromBases();
 
         for (var entity : entities) {
-            entity.changeHealthColor(Color.green);
             entity.update(this);
         }
 

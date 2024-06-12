@@ -14,59 +14,71 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Infantry extends Entity {
-    // Entity movement
-    protected boolean needToAttack = false;
-    protected boolean needToGoToTargetBase = false;
-    protected Base target;
+    // Main Fields
+        // Entity movement
+        protected boolean needToAttack = false;
+        protected boolean needToGoToTargetBase = false;
+        protected Base target;
 
-    // Components
-    protected Controllable controllable;
-    protected HealthStats healthStats;
+        // Components
+        private Controllable controllableComponent; // Requirement №6
+        protected HealthStats healthStatsComponent; // Requirement №6
 
-    // Entity features
-    protected int damage;
-    protected int sightRadius;
-    protected int maxHealth = 100;
-    protected long lastDamageTime;
-    protected int timeForReload;
+        // Entity features
+        protected int damage;
+        protected int sightRadius;
+        protected int maxHealth = 100;
+        protected long lastDamageTime;
+        protected int timeForReload;
+        protected String ID;
 
-    protected String ID;
-
-    public Infantry() {
+    // Initializers
+    public Infantry() {  // Requirement №2
         initializeComponents();
         generateID();
     }
-
     public Infantry(Vector2<Double> spawnPosition) {
-        this();
-        this.position = spawnPosition;
+        this(); this.position = spawnPosition;  // Requirement №3
     }
 
+    private void initializeComponents() {
+        controllableComponent = new Controllable(this);
+        healthStatsComponent = new HealthStats(this, maxHealth);
+    }
+    private void generateID() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(10000); // 0-9999
+        ID = String.format("%04d", randomNumber);
+    }
+    public void initializeBaseStats(double velocity, int damage, int sightRadius, int timeForReload) {
+        this.velocity = velocity;
+        this.damage = damage;
+        this.sightRadius = sightRadius;
+        this.timeForReload = timeForReload;
+    }
+
+    // Getters&Setters
     public String getID() { return ID; }
     public int getDamage() { return damage; }
-    public int getHP() { return healthStats.getHealth(); }
-
+    public int getHP() { return healthStatsComponent.getHealth(); }
     public void setDamage(int damage) { this.damage = damage; }
     public void setID(String ID) { this.ID = ID; }
-    public int getSightRadius() { return sightRadius; }
-    public void setNewPosition(Vector2<Double> newPosition) { position = newPosition; }
-
     public void setNeedToGoToTargetBase(boolean needToGoToTargetBase) {
         this.needToGoToTargetBase = needToGoToTargetBase;
     }
-
     public boolean isNeedToGoToTargetBase() {
         return needToGoToTargetBase;
     }
-
     public Base getTarget() {
         return target;
     }
-
     public void setTarget(Base target) {
         this.target = target;
     }
+    public Controllable getControllableComponent() { return controllableComponent; }
+    public HealthStats getHealthStatsComponent() { return healthStatsComponent; }
 
+    // Methods
     public void moveToTargetBase() {
             // Calculate the direction vector
             double directionX = target.getEntitySpawnPos().getX() - position.getX();
@@ -88,62 +100,6 @@ public abstract class Infantry extends Entity {
             }
     }
 
-    // Static initialization block
-    static {
-        System.out.println("Static block initialized");
-    }
-
-    private void generateID() {
-        Random random = new Random();
-        int randomNumber = random.nextInt(10000); // 0-9999
-        ID = String.format("%04d", randomNumber);
-    }
-
-    private void initializeComponents() {
-        controllable = new Controllable(this);
-        healthStats = new HealthStats(this, maxHealth);
-    }
-
-    public void initializeBaseStats(double velocity, int damage, int sightRadius, int timeForReload) {
-        this.velocity = velocity;
-        this.damage = damage;
-        this.sightRadius = sightRadius;
-        this.timeForReload = timeForReload;
-    }
-
-    public void drawSightRadius(Graphics g) {
-        g.setColor(new Color(255, 0, 0, 25));
-        int diameter = sightRadius * 2;
-        int halfOfImgW = (int)(img.getWidth() * scaleFactor / 2);
-        int halfOfImgH = (int)(img.getHeight() * scaleFactor / 2);
-        g.fillOval((int)(position.getX() + halfOfImgW - sightRadius), (int)(position.getY() + halfOfImgH - sightRadius), diameter, diameter);
-    }
-
-    public Controllable getControllableComponent() { return controllable; }
-    public HealthStats getHealthStatsComponent() { return healthStats; }
-
-    @Override
-    public Infantry deepCopy() {
-        Infantry copy = (Infantry) super.deepCopy(); // Shallow copy of Entity
-        copy.controllable = new Controllable(copy); // Deep copy of Controllable
-        copy.controllable.setControllable(false);
-        copy.healthStats = new HealthStats(copy, this.healthStats.getHealth()); // Deep copy of HealthStats
-
-        return copy;
-    }
-
-    public void changeHealthColor(Color color) {
-        healthStats.setBarColor(color);
-    }
-
-    @Override
-    public String toString() {
-        return  "ID = " + ID + "\n" +
-                "Damage = " + damage + "\n" +
-                "Health = " + getHP() + "\n" +
-                "Position = " + position.toString() + "\n";
-    }
-
     public ArrayList<Infantry> getEntitiesWithinSightRadius(ArrayList<Infantry> allEntities) {
         ArrayList<Infantry> entitiesInRange = new ArrayList<>();
         for (Infantry entity : allEntities) {
@@ -157,6 +113,14 @@ public abstract class Infantry extends Entity {
         return entitiesInRange;
     }
 
+    public void drawSightRadius(Graphics g) {
+        g.setColor(new Color(255, 0, 0, 25));
+        int diameter = sightRadius * 2;
+        int halfOfImgW = (int)(img.getWidth() * scaleFactor / 2);
+        int halfOfImgH = (int)(img.getHeight() * scaleFactor / 2);
+        g.fillOval((int)(position.getX() + halfOfImgW - sightRadius), (int)(position.getY() + halfOfImgH - sightRadius), diameter, diameter);
+    }
+
     public void Shoot(GameWorld gameWorld, String enemyTeam) {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastDamageTime >= timeForReload) {
@@ -168,5 +132,23 @@ public abstract class Infantry extends Entity {
             }
             lastDamageTime = currentTime;
         }
+    }
+
+    @Override
+    public Infantry deepCopy() { // Requirement №7
+        Infantry copy = (Infantry) super.deepCopy(); // Shallow copy of Entity
+        copy.controllableComponent = new Controllable(copy); // Deep copy of Controllable
+        copy.controllableComponent.setControllable(false);
+        copy.healthStatsComponent = new HealthStats(copy, this.healthStatsComponent.getHealth()); // Deep copy of HealthStats
+
+        return copy;
+    }
+
+    @Override
+    public String toString() {
+        return  "ID = " + ID + "\n" +
+                "Damage = " + damage + "\n" +
+                "Health = " + getHP() + "\n" +
+                "Position = " + position.toString() + "\n";
     }
 }

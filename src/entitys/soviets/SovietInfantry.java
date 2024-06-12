@@ -14,15 +14,15 @@ public class SovietInfantry extends Infantry {
     public SovietInfantry(Vector2<Double> position) {
         super(position);
         initializeEntityImgSettings("soviet/entities/infantry.png", 0.7);
-        initializeBaseStats(0.5, 5, 100, 1000);
+        initializeBaseStats(0.5, 15, 100, 1000);
     }
-
+    // Requirement №11 Static Polymorphism
     public SovietInfantry(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
         this.setID(id);
         initializeEntityImgSettings("soviet/entities/infantry.png", 0.7);
         initializeBaseStats(velocity, damage, 100, 500);
-        controllable.setControllable(isControllable);
+        getControllableComponent().setControllable(isControllable);
     }
 
     @Override
@@ -73,20 +73,35 @@ public class SovietInfantry extends Infantry {
         }
 
         Shoot(gameWorld, SD.Nazi);
+
+        // Set to original Values after base modification of entity // for Requirement №17
+        setVelocity(0.5);
+        getHealthStatsComponent().setBarColor(Color.green);
     }
 
     @Override
     public void draw(Graphics g) {
         drawImg(g);
-        healthStats.drawHealthStats(g);
+        healthStatsComponent.drawHealthStats(g);
 
         if (getControllableComponent().isControllable()) {
-            controllable.drawBorder(g);
+            getControllableComponent().drawBorder(g);
         }
 
         g.setColor(Color.BLACK);
-        g.drawString(ID, healthStats.getBarPosition().getX(), healthStats.getBarPosition().getY() - 5);
+        g.drawString(ID, healthStatsComponent.getBarPosition().getX(), healthStatsComponent.getBarPosition().getY() - 5);
 
         drawSightRadius(g);
+    }
+
+    @Override
+    public String toString() {
+        return "SovietInfantry{" +
+                "needToAttack=" + needToAttack +
+                ", target=" + target +
+                ", damage=" + damage +
+                ", ID='" + ID + '\'' +
+                ", velocity=" + velocity +
+                '}';
     }
 }

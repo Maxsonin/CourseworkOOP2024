@@ -2,7 +2,6 @@
 
 package inputs;
 
-import bases.Base;
 import dialogBoxes.CreateDialog;
 import entitys.base.Infantry;
 import main.GameWorld;
@@ -25,13 +24,13 @@ public class KeyboardInputs implements KeyListener {
         ArrayList<Infantry> controllableEntitiesFromHierarchy = gameWorld.getAllControllableEntities();
 
         int keyCode = e.getKeyCode();
-        for (Infantry activatedEntity : controllableEntitiesFromHierarchy) { activatedEntity.getControllableComponent().handleMovement(keyCode); }
+        for (Infantry activatedEntity : controllableEntitiesFromHierarchy) { activatedEntity.getControllableComponent().handleMovement(keyCode); } // Requirement №29
         switch (keyCode) {
             case KeyEvent.VK_T:
                 System.out.println("Keyboard is responding!");
                 break;
 
-            case KeyEvent.VK_ESCAPE:
+            case KeyEvent.VK_ESCAPE: // Requirement №31
                 for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
                     activatedEntity.getControllableComponent().setControllable(false);
                 }
@@ -42,17 +41,9 @@ public class KeyboardInputs implements KeyListener {
                 createDialog.showCreateDialog();
                 break;
 
-            case KeyEvent.VK_DELETE:
-                var bases = gameWorld.getBases();
-
-                for (Base base : bases) {
-                    var entities = base.getEntities();
-                        for (Infantry activatedEntity : controllableEntitiesFromHierarchy) {
-                            if (entities.contains(activatedEntity))
-                            {
-                                entities.remove(activatedEntity);
-                            }
-                        }
+            case KeyEvent.VK_DELETE: // Requirement №30
+                for (var entity : controllableEntitiesFromHierarchy) {
+                    gameWorld.getEntities().remove(entity);
                 }
                 break;
 

@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class NaziInfantry extends Infantry {
     public NaziInfantry(Vector2<Double> position) {
-        super(position);
+        super(position); // Requirement №14
         initializeEntityImgSettings("nazi/entities/infantry.png", 1);
         initializeBaseStats(0.5, 15, 150, 1000);
     }
@@ -22,11 +22,11 @@ public class NaziInfantry extends Infantry {
         this.setID(id);
         initializeEntityImgSettings("nazi/entities/infantry.png", 1);
         initializeBaseStats(velocity, damage, 150, 1000);
-        controllable.setControllable(isControllable);
+        getControllableComponent().setControllable(isControllable);
     }
 
     @Override
-    public void move(GameWorld gameWorld) {
+    public void move(GameWorld gameWorld) { // Requirement №35
         if (!needToAttack && !needToGoToTargetBase) {
             ArrayList<Base> bases = gameWorld.getBases();
             if (bases.isEmpty()) {
@@ -73,20 +73,35 @@ public class NaziInfantry extends Infantry {
         }
 
         Shoot(gameWorld, SD.Soviet);
+
+        // Set to orignal Values after base modification of entity
+        setVelocity(0.5);
+        getHealthStatsComponent().setBarColor(Color.green);
     }
 
     @Override
     public void draw(Graphics g) {
-        drawImg(g);
-        healthStats.drawHealthStats(g);
+        drawImg(g); // Requirement №25
+        healthStatsComponent.drawHealthStats(g);  // Requirement №25
 
         if (getControllableComponent().isControllable()) {
-            controllable.drawBorder(g);
+            getControllableComponent().drawBorder(g);
         }
 
         g.setColor(Color.BLACK);
-        g.drawString(ID, healthStats.getBarPosition().getX(), healthStats.getBarPosition().getY() - 5);
+        g.drawString(ID, healthStatsComponent.getBarPosition().getX(), healthStatsComponent.getBarPosition().getY() - 5);  // Requirement №25
 
         drawSightRadius(g);
+    }
+
+    @Override
+    public String toString() {
+        return "NaziInfantry{" +
+                "needToAttack=" + needToAttack +
+                ", damage=" + damage +
+                ", maxHealth=" + maxHealth +
+                ", timeForReload=" + timeForReload +
+                ", ID='" + ID + '\'' +
+                '}';
     }
 }

@@ -15,7 +15,7 @@ public class Map {
     private Dimension imgSize;
 
     private Vector2<Integer> viewPos = new Vector2<>(0, 0);
-    private double scalePercentage = 0.5; // To see 25% of full map
+    private double scalePercentage = 0.5; // To see 25% of full map // Requirement №33
     private final int amountOfDisplacement = 100;
 
     private BufferedImage mapImg;
@@ -35,6 +35,7 @@ public class Map {
         subImage.flush();
     }
 
+    // Requirement №34
     public void moveViewDown(GameWorld gameWorld) {
         int oldYPos = viewPos.getY();
         int newY = oldYPos + amountOfDisplacement;
@@ -44,7 +45,6 @@ public class Map {
         double amountToMove = oldYPos - Math.min(newY, maxAllowedY);
         gameWorld.moveDown(-amountToMove);
     }
-
     public void moveViewUp(GameWorld gameWorld) {
         int oldYPos = viewPos.getY();
         int newY = oldYPos - amountOfDisplacement;
@@ -54,7 +54,6 @@ public class Map {
         double amountToMove = oldYPos - Math.max(newY, minAllowedY);
         gameWorld.moveUp(amountToMove);
     }
-
     public void moveViewLeft(GameWorld gameWorld) {
         int oldXPos = viewPos.getX();
         int newX = oldXPos - amountOfDisplacement;
@@ -64,7 +63,6 @@ public class Map {
         double amountToMove = oldXPos - Math.max(newX, minAllowedX);
         gameWorld.moveLeft(amountToMove);
     }
-
     public void moveViewRight(GameWorld gameWorld) {
         int oldXPos = viewPos.getX();
         int newX = oldXPos + amountOfDisplacement;

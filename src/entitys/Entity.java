@@ -76,4 +76,11 @@ public abstract class Entity implements Cloneable  {
             g.dispose();
         }
     }
+
+    @Override
+    public String toString() { // Requirement №9
+        return "Entity{" +
+                "position=" + position +
+                '}';
+    }
 }

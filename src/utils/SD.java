@@ -2,7 +2,6 @@
 
 package utils;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class SD {
@@ -42,13 +41,13 @@ public class SD {
     public static final String SquadLeader = "Squad Leader";
     public static final String Kombat = "Kombat";
 
+    // Require Manual input
     public static ArrayList<String> getAllTeams() {
         ArrayList<String> teams = new ArrayList<>();
         teams.add(Nazi);
         teams.add(Soviet);
         return teams;
     }
-    
     public static ArrayList<String> getAllNaziBasesNames() {
         ArrayList<String> names = new ArrayList<>();
         names.add(WerwolfNaziBase);
@@ -56,7 +55,6 @@ public class SD {
         names.add(YaltaNaziBase);
         return names;
     }
-
     public static ArrayList<String> getAllSovietBasesNames() {
         ArrayList<String> names = new ArrayList<>();
         names.add(StalingradSovietBase);
@@ -64,7 +62,6 @@ public class SD {
         names.add(KubanSovietBase);
         return names;
     }
-
     public static ArrayList<String> getAllCapturePointNames() {
         ArrayList<String> names = new ArrayList<>();
         names.add(RostovCapturePoint);
@@ -72,14 +69,12 @@ public class SD {
         names.add(MaikopCapturePoint);
         return names;
     }
-
     public static ArrayList<String> getAllBasesNames() {
         ArrayList<String> names = new ArrayList<>();
         names.addAll(getAllNaziBasesNames());
         names.addAll(getAllSovietBasesNames());
         return names;
     }
-
     public static ArrayList<String> getAllBasesAndCapturePointsNames() {
         ArrayList<String> names = new ArrayList<>();
         names.addAll(getAllNaziBasesNames());
@@ -87,7 +82,6 @@ public class SD {
         names.addAll(getAllCapturePointNames());
         return names;
     }
-
     public static ArrayList<String> getAllEntityTypes() {
         ArrayList<String> names = new ArrayList<>();
         names.add(Infantry);
@@ -95,12 +89,11 @@ public class SD {
         names.add(Kombat);
         return names;
     }
-
     public static ArrayList<String> getSortOptions() {
         ArrayList<String> sortOptions = new ArrayList<>();
         sortOptions.add("HP");
         sortOptions.add("ID");
         sortOptions.add("Damage");
         return sortOptions;
-    }
+    } // Need To Be Precise
 }

@@ -1,7 +1,6 @@
 package entitys.nazi;
 
 import bases.Base;
-import entitys.base.Infantry;
 import entitys.base.Kombat;
 import main.GameWorld;
 import utils.SD;
@@ -26,7 +25,7 @@ public class NaziKombat extends Kombat {
         this.setID(id);
         initializeEntityImgSettings("nazi/entities/kombat.png", 1);
         initializeBaseStats(velocity, damage, 50, 2500);
-        controllable.setControllable(isControllable);
+        getControllableComponent().setControllable(isControllable);
     }
 
     @Override
@@ -73,14 +72,14 @@ public class NaziKombat extends Kombat {
     @Override
     public void draw(Graphics g) {
         drawImg(g);
-        healthStats.drawHealthStats(g);
+        healthStatsComponent.drawHealthStats(g);
 
         if (getControllableComponent().isControllable()) {
-            controllable.drawBorder(g);
+            getControllableComponent().drawBorder(g);
         }
 
         g.setColor(Color.BLACK);
-        g.drawString(ID, healthStats.getBarPosition().getX(), healthStats.getBarPosition().getY() - 5);
+        g.drawString(ID, healthStatsComponent.getBarPosition().getX(), healthStatsComponent.getBarPosition().getY() - 5);
 
         drawSightRadius(g);
     }
@@ -92,5 +91,9 @@ public class NaziKombat extends Kombat {
         }
 
         Shoot(gameWorld, SD.Soviet);
+
+        // Set to orignal Values after base modification of entity
+        setVelocity(0.2);
+        getHealthStatsComponent().setBarColor(Color.green);
     }
 }

@@ -14,14 +14,16 @@ public class GamePanel extends JPanel {
     private GameWorld gameWorld;
 
     public GamePanel(GameWorld gameWorld) {
-        mouseInputs = new MouseInputs(gameWorld);
         this.gameWorld = gameWorld;
+        this.mouseInputs = new MouseInputs(gameWorld);
 
-        setPanelSize();
-
+        setFocusable(true);
+        requestFocusInWindow();
         addKeyListener(new KeyboardInputs(gameWorld));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
+
+        setPanelSize();
     }
 
     private void setPanelSize() {
@@ -29,7 +31,8 @@ public class GamePanel extends JPanel {
         setPreferredSize(size);
     }
 
-    public void paintComponent(Graphics g) {
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         gameWorld.render(g);
     }

@@ -26,10 +26,6 @@ public class EditDialog {
         checkBox.setSelected(entityToEdit.getControllableComponent().isControllable());
         panel.add(checkBox);
 
-        panel.add(new JLabel("Entity Velocity:"));
-        JTextField velocityField = new JTextField(String.valueOf(entityToEdit.getVelocity()));
-        panel.add(velocityField);
-
         panel.add(new JLabel("Entity Damage:"));
         JTextField damageField = new JTextField(String.valueOf(entityToEdit.getDamage()));
         panel.add(damageField);
@@ -39,14 +35,6 @@ public class EditDialog {
             String idParam = idField.getText();
             boolean isControllableParam = checkBox.isSelected();
 
-            double velocityParam;
-            try {
-                velocityParam = Double.parseDouble(velocityField.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(frame, "Invalid velocity input", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
             int damageParam;
             try {
                 damageParam = Integer.parseInt(damageField.getText());
@@ -55,7 +43,7 @@ public class EditDialog {
                 return;
             }
 
-            editEntity(entityToEdit, idParam, isControllableParam, velocityParam, damageParam);
+            editEntity(entityToEdit, idParam, isControllableParam, 1.0, damageParam);
 
             frame.dispose();
         });

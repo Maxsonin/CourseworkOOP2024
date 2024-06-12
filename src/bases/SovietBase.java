@@ -1,21 +1,21 @@
 package bases;
 
-import entitys.base.Infantry;
 import utils.Loader;
 import utils.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class SovietBase extends Base {
+    private long lastUpdateTime;
+
     public SovietBase(Vector2<Double> position) {
         super(position);
         InitializeImg("/soviet/bases/base1.png", 0.5);
         img = Loader.GetSprite(fileName);
-
+        baseCapacity = 50;
         entities = new ArrayList<>();
+        lastUpdateTime = System.currentTimeMillis();
     }
 
     @Override
@@ -37,10 +37,23 @@ public class SovietBase extends Base {
 
     @Override
     public void update() {
-        entitySpawnPos = new Vector2<>(position.getX() + 50,position.getY() + 50); // random values of base center
+        entitySpawnPos = new Vector2<>(position.getX() + 50, position.getY() + 50); // random values of base center
 
         for (var entity : entities) {
-            entity.changeHealthColor(color);
+            entity.getHealthStatsComponent().setBarColor(color);
+            entity.setVelocity(0.1);
+        }
+
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastUpdateTime >= 1000) {
+            updateHealth();
+            lastUpdateTime = currentTime;
+        }
+    }
+
+    private void updateHealth() {
+        for (var entity : entities) {
+            entity.getHealthStatsComponent().changeHealth(+10);
         }
     }
 }

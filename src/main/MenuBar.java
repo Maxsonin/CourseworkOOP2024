@@ -2,12 +2,10 @@ package main;
 
 import dialogBoxes.*;
 import entitys.base.Infantry;
-import utils.SD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class MenuBar extends JMenuBar {
@@ -18,39 +16,31 @@ public class MenuBar extends JMenuBar {
         this.gameWorld = gameWorld;
 
         this.add(InitializeActionsWithEntitiesMenu());
-        this.add(InitializeSortManu());
+        this.add(InitializeSortMenu());
         this.add(InitializeHelpMenu());
     }
 
+    // Utility method to create menu items and add action listeners
+    JMenuItem createMenuItem(String text, Runnable action) {
+        JMenuItem menuItem = new JMenuItem(text);
+        menuItem.addActionListener(e -> action.run());
+        return menuItem;
+    }
+
+    // Actions With Entities Menu
     private JMenu InitializeActionsWithEntitiesMenu() {
         JMenu addEntityMenu = new JMenu("Actions with Entities");
 
-        JMenuItem addItem = new JMenuItem("Create new Entity");
-        addItem.addActionListener((ActionEvent e) -> {
+        addEntityMenu.add(createMenuItem("Create new Entity", () -> {
             CreateDialog createDialog = new CreateDialog(gameWorld);
             createDialog.showCreateDialog();
-        });
-
-        JMenuItem editEntity = new JMenuItem("Edit Selected Entity");
-        editEntity.addActionListener((ActionEvent e) -> {
-            editEntity();
-        });
-
-        JMenuItem copyEntity = new JMenuItem("Duplicate Selected Entity");
-        copyEntity.addActionListener((ActionEvent e) -> {
-            copyEntity();
-        });
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-
-        addEntityMenu.add(addItem);
-        addEntityMenu.add(editEntity);
-        addEntityMenu.add(copyEntity);
+        }));
+        addEntityMenu.add(createMenuItem("Edit Selected Entity", this::editEntity));
+        addEntityMenu.add(createMenuItem("Duplicate Selected Entity", this::duplicateEntity));
 
         return addEntityMenu;
     }
-
-    private void copyEntity() {
+    private void duplicateEntity() { // Requirement №7
         ArrayList<Infantry> entityList = gameWorld.getAllControllableEntities();
         for (var entity : entityList) {
             gameWorld.getEntities().add(entity.deepCopy());
@@ -61,94 +51,44 @@ public class MenuBar extends JMenuBar {
         if (entityList.size() == 1) {
             EditDialog.showEditDialogue(entityList.getFirst());
         } else {
-            JOptionPane.showMessageDialog(null, "You need to select one Entity", "Controllable Entities Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You need to select ONLY ONE Entity", "Controllable Entities Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private JMenu InitializeSortManu() {
-        // Separators
-        JSeparator s1 = new JSeparator();
-        s1.setOrientation(SwingConstants.HORIZONTAL);
-        JSeparator s2 = new JSeparator();
-        s2.setOrientation(SwingConstants.HORIZONTAL);
-        JSeparator s3 = new JSeparator();
-        s3.setOrientation(SwingConstants.HORIZONTAL);
-        JSeparator s4 = new JSeparator();
-        s4.setOrientation(SwingConstants.HORIZONTAL);
+    // Sort & Search Menu
+    private JMenu InitializeSortMenu() {
+        JMenu sortSearchMenu = new JMenu("Sorting & Searching");
 
-        ///////////////////////////////////////////////////////////////////////////////////////
+        sortSearchMenu.add(createMenuItem("Show All Entities", this::showAll));
+        sortSearchMenu.add(createMenuItem("Show All Controllable Entities", this::showAllControllable));
+        sortSearchMenu.add(new JSeparator(SwingConstants.HORIZONTAL));
 
-        JMenu addEntityMenu = new JMenu("Sorting & Searching");
-
-        JMenuItem showAllControllable = new JMenuItem("Show All Controllable Entities");
-        showAllControllable.addActionListener((ActionEvent e) -> {
-            showAllControllable();
-        });
-
-        JMenuItem showAll = new JMenuItem("Show All Entities");
-        showAll.addActionListener((ActionEvent e) -> {
-            showAll();
-        });
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-
-        JMenuItem showAllEntitiesThatBelongsToSpecificBase = new JMenuItem("Show All Entities That Belong To Specific Base");
-        showAllEntitiesThatBelongsToSpecificBase.addActionListener((ActionEvent e) -> {
+        sortSearchMenu.add(createMenuItem("Show All Entities That Belong To Specific Base", () -> {
             ChooseBaseDialog chooseBaseDialog = new ChooseBaseDialog();
             String choosedBase = chooseBaseDialog.showChooseBaseDialog();
             showAllEntitiesFromBase(choosedBase);
-        });
+        }));
+        sortSearchMenu.add(createMenuItem("Show All Entities That NOT Belong To Any Base", this::ShowAllEntitiesThatAreNOTBelongsToAnyBase));
+        sortSearchMenu.add(new JSeparator(SwingConstants.HORIZONTAL));
 
-        JMenuItem showAllEntitiesThatAreNOTBelongsToAnyBase = new JMenuItem("Show All Entities That NOT Belong To Any Base");
-        showAllEntitiesThatAreNOTBelongsToAnyBase.addActionListener((ActionEvent e) -> {
-            ShowAllEntitiesThatAreNOTBelongsToAnyBase();
-        });
+        sortSearchMenu.add(createMenuItem("Count Element", this::countElement));
+        sortSearchMenu.add(new JSeparator(SwingConstants.HORIZONTAL));
 
-        ///////////////////////////////////////////////////////////////////////////////////////
+        sortSearchMenu.add(createMenuItem("Search Element", this::searchElement));
+        sortSearchMenu.add(new JSeparator(SwingConstants.HORIZONTAL));
 
-        JMenuItem countElement = new JMenuItem("Count Element");
-        countElement.addActionListener((ActionEvent e) -> {
-            countElement();
-        });
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-
-        JMenuItem searchEntity = new JMenuItem("Search Element");
-        searchEntity.addActionListener((ActionEvent e) -> {
-            searchElement();
-        });
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-
-        JMenuItem sortEntities = new JMenuItem("Sort Element");
-        sortEntities.addActionListener((ActionEvent e) -> {
+        sortSearchMenu.add(createMenuItem("Sort Element", () -> {
             SortDialog chooseSortDialog = new SortDialog();
             String choosedSortOption = chooseSortDialog.showSortDialog();
             sortEntities(choosedSortOption);
-        });
+        }));
 
-
-        addEntityMenu.add(showAll);
-        addEntityMenu.add(showAllControllable);
-        addEntityMenu.add(s1);
-        addEntityMenu.add(showAllEntitiesThatBelongsToSpecificBase);
-        addEntityMenu.add(showAllEntitiesThatAreNOTBelongsToAnyBase);
-        addEntityMenu.add(s2);
-        addEntityMenu.add(countElement);
-        addEntityMenu.add(s3);
-        addEntityMenu.add(searchEntity);
-        addEntityMenu.add(s4);
-        addEntityMenu.add(sortEntities);
-
-
-        return addEntityMenu;
+        return sortSearchMenu;
     }
-
     private void showAllControllable() {
         ArrayList<Infantry> entityList = gameWorld.getAllControllableEntities();
 
         StringBuilder message = new StringBuilder("List of Controllable Entities:\n");
-
         if (!entityList.isEmpty()) {
             for (Infantry entity : entityList) {
                 message.append("- ").append(entity.getID()).append("\n");
@@ -173,10 +113,10 @@ public class MenuBar extends JMenuBar {
             JOptionPane.showMessageDialog(null, message.toString(), "List of Entities", JOptionPane.WARNING_MESSAGE);
         }
     }
-    private void showAllEntitiesFromBase(String choosedBase) {
-        ArrayList<Infantry> baseEntityArray = gameWorld.getBaseByName(choosedBase).getEntities();
+    private void showAllEntitiesFromBase(String chosenBase) {
+        ArrayList<Infantry> baseEntityArray = gameWorld.getBaseByName(chosenBase).getEntities();
 
-        StringBuilder message = new StringBuilder("List of All Entities that Belong to " + choosedBase + ":\n");
+        StringBuilder message = new StringBuilder("List of All Entities that Belong to " + chosenBase + ":\n");
         if (!baseEntityArray.isEmpty()) {
             for (Infantry entity : baseEntityArray) {
                 message.append("- ").append(entity.getID()).append("\n");
@@ -197,7 +137,7 @@ public class MenuBar extends JMenuBar {
             }
             JOptionPane.showMessageDialog(null, message, "List of Entities", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            message.append("No Entities Are in this Base");
+            message.append("No Entities are outside the bases");
             JOptionPane.showMessageDialog(null, message, "List of Entities", JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -231,49 +171,32 @@ public class MenuBar extends JMenuBar {
         searchDialog.showSearchDialog();
     }
     private void sortEntities(String choosedSortOption) {
-        ArrayList<Infantry> entitiesCopy = (ArrayList<Infantry>) gameWorld.getEntities().clone();
+        ArrayList<Infantry> entitiesCopy = new ArrayList<>(gameWorld.getEntities());
 
-        // Define comparators for each attribute
-        Comparator<Infantry> hpComparator = new Comparator<Infantry>() {
-            @Override
-            public int compare(Infantry e1, Infantry e2) {
-                return Integer.compare(e1.getHP(), e2.getHP());
-            }
-        };
-
-        Comparator<Infantry> idComparator = new Comparator<Infantry>() {
-            @Override
-            public int compare(Infantry e1, Infantry e2) {
-                return e1.getID().compareTo(e2.getID()); // fix
-            }
-        };
-
-        Comparator<Infantry> damageComparator = new Comparator<Infantry>() {
-            @Override
-            public int compare(Infantry e1, Infantry e2) {
-                return Integer.compare(e1.getDamage(), e2.getDamage());
-            }
-        };
-
+        // Define comparators for each attribute using lambdas
+        Comparator<Infantry> hpComparator = Comparator.comparingInt(Infantry::getHP);
+        Comparator<Infantry> idComparator = Comparator.comparingInt(e -> Integer.parseInt(e.getID()));
+        Comparator<Infantry> damageComparator = Comparator.comparingInt(Infantry::getDamage);
 
         switch (choosedSortOption) {
             case "HP":
-                Collections.sort(entitiesCopy, hpComparator);
+                entitiesCopy.sort(hpComparator);
                 break;
             case "ID":
-                Collections.sort(entitiesCopy, idComparator);
+                entitiesCopy.sort(idComparator);
                 break;
             case "Damage":
-                Collections.sort(entitiesCopy, damageComparator);
+                entitiesCopy.sort(damageComparator);
                 break;
+            default:
+                throw new IllegalArgumentException("Invalid sort option: " + choosedSortOption);
         }
 
-
-        StringBuilder message = getStringBuilder(choosedSortOption, entitiesCopy);
+        // Build and show the message with sorted entities
+        StringBuilder message = getSortedEntitiesMessage(choosedSortOption, entitiesCopy);
         JOptionPane.showMessageDialog(null, message.toString(), "List of Sorted Entities", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    private static StringBuilder getStringBuilder(String choosedSortOption, ArrayList<Infantry> entitiesCopy) {
+    private StringBuilder getSortedEntitiesMessage(String choosedSortOption, ArrayList<Infantry> entitiesCopy) {
         StringBuilder message = new StringBuilder("List of Sorted Entities by" + choosedSortOption + ":\n");
         for (Infantry entity : entitiesCopy) {
             message.append(entity.getID() + ": ");
@@ -292,15 +215,25 @@ public class MenuBar extends JMenuBar {
         return message;
     }
 
+/*    private JMenu InitializeSerializeMan() {
+        JMenu serializeMenu = new JMenu("Serialize");
+
+        JMenuItem serialize = new JMenuItem("Serialize");
+        serialize.addActionListener((ActionEvent e) -> {
+            Serializer.serialize();
+        });
+
+        JMenuItem deserialize = new JMenuItem("Deserialize");
+        deserialize.addActionListener((ActionEvent e) -> {
+            Deserializer.deserialize();
+        });
+    }*/
+
+    // Help Menu
     private JMenu InitializeHelpMenu() {
         JMenu helpMenu = new JMenu("Help");
 
-        JMenuItem showAllControllable = new JMenuItem("Show Shortcuts");
-        showAllControllable.addActionListener((ActionEvent e) -> {
-            showShortcuts();
-        });
-
-        helpMenu.add(showAllControllable);
+        helpMenu.add(createMenuItem("Show Shortcuts", this::showShortcuts));
 
         return helpMenu;
     }

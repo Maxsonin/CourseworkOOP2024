@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class CreateDialog {
+public class CreateDialog { // Requirement №32
     private GameWorld gameWorld;
 
     public CreateDialog(GameWorld gameWorld) {
@@ -23,7 +23,7 @@ public class CreateDialog {
         frame.setLocationRelativeTo(null); // Set dialogue window to center
         frame.setSize(new Dimension(200, 200));
 
-        JPanel panel = new JPanel(new GridLayout(9, 2));
+        JPanel panel = new JPanel(new GridLayout(8, 2));
 
         // Adding all elements
         panel.add(new JLabel("Entity ID:"));
@@ -50,10 +50,6 @@ public class CreateDialog {
         JComboBox<String> classComboBox = new JComboBox<>(subclassOptions);
         panel.add(new JLabel("Select class:"));
         panel.add(classComboBox);
-
-        panel.add(new JLabel("Entity Velocity:"));
-        JTextField velocityField = new JTextField();
-        panel.add(velocityField);
 
         panel.add(new JLabel("Entity Damage:"));
         JTextField damageField = new JTextField();
@@ -85,14 +81,6 @@ public class CreateDialog {
 
             String selectedClassParam = (String) classComboBox.getSelectedItem();
 
-            double velocityParam;
-            try {
-                velocityParam = Double.parseDouble(velocityField.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(frame, "Invalid velocity input", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
             int damageParam;
             try {
                 damageParam = Integer.parseInt(damageField.getText());
@@ -101,7 +89,7 @@ public class CreateDialog {
                 return;
             }
 
-            createEntity(idParam, isControllableParam, position, selectedTeamParam, selectedClassParam, velocityParam, damageParam);
+            createEntity(idParam, isControllableParam, position, selectedTeamParam, selectedClassParam, 1.0, damageParam);
 
             frame.dispose();
         });

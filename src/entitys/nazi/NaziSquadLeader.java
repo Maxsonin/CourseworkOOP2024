@@ -23,7 +23,7 @@ public class NaziSquadLeader extends SquadLeader {
         this.setID(id);
         initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
         initializeBaseStats(velocity, damage, 100, 1000);
-        controllable.setControllable(isControllable);
+        getControllableComponent().setControllable(isControllable);
     }
 
     @Override
@@ -70,14 +70,14 @@ public class NaziSquadLeader extends SquadLeader {
     @Override
     public void draw(Graphics g) {
         drawImg(g);
-        healthStats.drawHealthStats(g);
+        healthStatsComponent.drawHealthStats(g);
 
         if (getControllableComponent().isControllable()) {
-            controllable.drawBorder(g);
+            getControllableComponent().drawBorder(g);
         }
 
         g.setColor(Color.BLACK);
-        g.drawString(ID, healthStats.getBarPosition().getX(), healthStats.getBarPosition().getY() - 5);
+        g.drawString(ID, healthStatsComponent.getBarPosition().getX(), healthStatsComponent.getBarPosition().getY() - 5);
 
         drawSightRadius(g);
     }
@@ -89,5 +89,9 @@ public class NaziSquadLeader extends SquadLeader {
         }
 
         Shoot(gameWorld, SD.Soviet);
+
+        // Set to orignal Values after base modification of entity
+        setVelocity(0.3);
+        getHealthStatsComponent().setBarColor(Color.green);
     }
 }

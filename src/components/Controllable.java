@@ -21,7 +21,7 @@ public class Controllable {
     public boolean isControllable() { return isControllable; }
     public void setControllable(boolean newIsControllable) { isControllable = newIsControllable; }
 
-    public void drawBorder(Graphics g) {
+    public void drawBorder(Graphics g) { // Requirement №27
         if (parentObj == null) { return; }
 
         Vector2<Double> objPosition = parentObj.getPosition();
