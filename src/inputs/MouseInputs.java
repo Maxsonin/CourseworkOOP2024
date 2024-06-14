@@ -2,8 +2,8 @@
 
 package inputs;
 
-import entitys.base.Infantry;
-import entitys.Entity;
+import entities.base.Infantry;
+import entities.Entity;
 import main.GameWorld;
 
 import java.awt.event.MouseEvent;
@@ -13,15 +13,15 @@ import java.util.ArrayList;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
 
-    private ArrayList<Infantry> entities;
+    private GameWorld gameWorld;
 
     public MouseInputs(GameWorld gameWorld) {
-        entities = gameWorld.getEntities();
+        this.gameWorld = gameWorld;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        for (var entity : entities) {
+        for (var entity : gameWorld.getEntities()) {
             if (isClickWithinBounds(entity, e.getX(), e.getY())) {
                 entity.getControllableComponent().setControllable(!entity.getControllableComponent().isControllable());
                 break;

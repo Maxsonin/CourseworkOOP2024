@@ -1,23 +1,23 @@
 package main;
 
 import dialogBoxes.*;
-import entitys.base.Infantry;
+import entities.base.Infantry;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class MenuBar extends JMenuBar {
     GameWorld gameWorld;
 
-
-    public MenuBar(GameWorld gameWorld) {
-        this.gameWorld = gameWorld;
-
+    {  // Requirement №4
         this.add(InitializeActionsWithEntitiesMenu());
         this.add(InitializeSortMenu());
         this.add(InitializeHelpMenu());
+    }
+
+    public MenuBar(GameWorld gameWorld) {
+        this.gameWorld = gameWorld;
     }
 
     // Utility method to create menu items and add action listeners
@@ -141,29 +141,22 @@ public class MenuBar extends JMenuBar {
             JOptionPane.showMessageDialog(null, message, "List of Entities", JOptionPane.WARNING_MESSAGE);
         }
     }
-    private void countElement() {
+    private void countElement() { // Requirement №42-43
         ArrayList<Infantry> entities = gameWorld.getEntities();
 
-        int entitiesWithLessThenHalfOfHP = 0;
-        for (var entity : entities) {
-            if (entity.getHP() < 50) {
-                entitiesWithLessThenHalfOfHP++;
-            }
-        }
+        long entitiesWithLessThenHalfOfHP = entities.stream()
+                .filter(entity -> entity.getHP() < 50)
+                .count();
 
         int controllableEntities = gameWorld.getAllControllableEntities().size();
 
-
-        int entitiesWithHighDamage = 0; // Damage > 20
-        for (var entity : entities) {
-            if (entity.getDamage() > 20) {
-                entitiesWithHighDamage++;
-            }
-        }
+        long entitiesWithHighDamage = entities.stream()
+                .filter(entity -> entity.getDamage() > 20)
+                .count();
 
         StringBuilder message = new StringBuilder("Entities with Less then Half of HP: " + entitiesWithLessThenHalfOfHP + "\n" +
-                                                  "Controllable Entities: " + controllableEntities + "\n" +
-                                                  "Entities with High Damage(>20): " + entitiesWithHighDamage + "\n");
+                "Controllable Entities: " + controllableEntities + "\n" +
+                "Entities with High Damage(>20): " + entitiesWithHighDamage + "\n");
         JOptionPane.showMessageDialog(null, message.toString(), "Count of Entities", JOptionPane.INFORMATION_MESSAGE);
     }
     private void searchElement() {
@@ -214,20 +207,6 @@ public class MenuBar extends JMenuBar {
         }
         return message;
     }
-
-/*    private JMenu InitializeSerializeMan() {
-        JMenu serializeMenu = new JMenu("Serialize");
-
-        JMenuItem serialize = new JMenuItem("Serialize");
-        serialize.addActionListener((ActionEvent e) -> {
-            Serializer.serialize();
-        });
-
-        JMenuItem deserialize = new JMenuItem("Deserialize");
-        deserialize.addActionListener((ActionEvent e) -> {
-            Deserializer.deserialize();
-        });
-    }*/
 
     // Help Menu
     private JMenu InitializeHelpMenu() {

@@ -1,11 +1,11 @@
 // Firs Entity in the triple inheritance hierarchy
 
-package entitys.base;
+package entities.base;
 
 import bases.Base;
 import components.Controllable;
 import components.HealthStats;
-import entitys.Entity;
+import entities.Entity;
 import main.GameWorld;
 import utils.Vector2;
 
@@ -75,11 +75,18 @@ public abstract class Infantry extends Entity {
     public void setTarget(Base target) {
         this.target = target;
     }
+    public boolean isNeedToAttack() {
+        return needToAttack;
+    }
+    public void setNeedToAttack(boolean needToAttack) {
+        this.needToAttack = needToAttack;
+    }
     public Controllable getControllableComponent() { return controllableComponent; }
     public HealthStats getHealthStatsComponent() { return healthStatsComponent; }
 
     // Methods
     public void moveToTargetBase() {
+        if (target != null) {
             // Calculate the direction vector
             double directionX = target.getEntitySpawnPos().getX() - position.getX();
             double directionY = target.getEntitySpawnPos().getY() - position.getY();
@@ -98,6 +105,7 @@ public abstract class Infantry extends Entity {
                 position.setX(position.getX() + moveX);
                 position.setY(position.getY() + moveY);
             }
+        }
     }
 
     public ArrayList<Infantry> getEntitiesWithinSightRadius(ArrayList<Infantry> allEntities) {

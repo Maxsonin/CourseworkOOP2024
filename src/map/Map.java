@@ -21,6 +21,9 @@ public class Map {
     private BufferedImage mapImg;
     private BufferedImage subImage;
 
+    static { // Requirement №4
+        System.out.println("Static Initialization Block");
+    }
 
     public Map() {
         mapImg = Loader.GetSprite(SD.Map);

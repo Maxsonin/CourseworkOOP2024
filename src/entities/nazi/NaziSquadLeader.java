@@ -1,8 +1,9 @@
-package entitys.nazi;
+package entities.nazi;
 
 import bases.Base;
-import entitys.base.Infantry;
+import entities.base.SquadLeader;
 import main.GameWorld;
+import serialization.SerializationFile;
 import utils.SD;
 import utils.Vector2;
 
@@ -10,23 +11,34 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class NaziInfantry extends Infantry {
-    public NaziInfantry(Vector2<Double> position) {
-        super(position); // Requirement №14
-        initializeEntityImgSettings("nazi/entities/infantry.png", 1);
-        initializeBaseStats(0.5, 15, 150, 1000);
+public class NaziSquadLeader extends SquadLeader {
+    public NaziSquadLeader(Vector2<Double> position) {
+        super(position);
+        super.initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
+        super.initializeBaseStats(0.3, 25, 100, 1000);
+        super.initializeSquadLeaderStats(20, 25);
     }
 
-    public NaziInfantry(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+    public NaziSquadLeader(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
         this.setID(id);
-        initializeEntityImgSettings("nazi/entities/infantry.png", 1);
-        initializeBaseStats(velocity, damage, 150, 1000);
+        initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
+        initializeBaseStats(velocity, damage, 100, 1000);
         getControllableComponent().setControllable(isControllable);
     }
 
+    public NaziSquadLeader(SerializationFile.EntityFields entityFields) {
+        super(entityFields.position);
+        setID(entityFields.ID);
+        initializeEntityImgSettings("nazi/entities/squadLeader.png", 1);
+        initializeBaseStats(0.3, 25, 100, 1000);
+        getControllableComponent().setControllable(entityFields.isControllable);
+        getHealthStatsComponent().setHealth(entityFields.health);
+        setNeedToGoToTargetBase(entityFields.needToGoToTargetBase);
+    }
+
     @Override
-    public void move(GameWorld gameWorld) { // Requirement №35
+    public void move(GameWorld gameWorld) {
         if (!needToAttack && !needToGoToTargetBase) {
             ArrayList<Base> bases = gameWorld.getBases();
             if (bases.isEmpty()) {
@@ -67,6 +79,21 @@ public class NaziInfantry extends Infantry {
     }
 
     @Override
+    public void draw(Graphics g) {
+        drawImg(g);
+        healthStatsComponent.drawHealthStats(g);
+
+        if (getControllableComponent().isControllable()) {
+            getControllableComponent().drawBorder(g);
+        }
+
+        g.setColor(Color.BLACK);
+        g.drawString(ID, healthStatsComponent.getBarPosition().getX(), healthStatsComponent.getBarPosition().getY() - 5);
+
+        drawSightRadius(g);
+    }
+
+    @Override
     public void update(GameWorld gameWorld) {
         if (!getControllableComponent().isControllable()) {
             move(gameWorld);
@@ -75,33 +102,7 @@ public class NaziInfantry extends Infantry {
         Shoot(gameWorld, SD.Soviet);
 
         // Set to orignal Values after base modification of entity
-        setVelocity(0.5);
+        setVelocity(0.3);
         getHealthStatsComponent().setBarColor(Color.green);
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        drawImg(g); // Requirement №25
-        healthStatsComponent.drawHealthStats(g);  // Requirement №25
-
-        if (getControllableComponent().isControllable()) {
-            getControllableComponent().drawBorder(g);
-        }
-
-        g.setColor(Color.BLACK);
-        g.drawString(ID, healthStatsComponent.getBarPosition().getX(), healthStatsComponent.getBarPosition().getY() - 5);  // Requirement №25
-
-        drawSightRadius(g);
-    }
-
-    @Override
-    public String toString() {
-        return "NaziInfantry{" +
-                "needToAttack=" + needToAttack +
-                ", damage=" + damage +
-                ", maxHealth=" + maxHealth +
-                ", timeForReload=" + timeForReload +
-                ", ID='" + ID + '\'' +
-                '}';
     }
 }

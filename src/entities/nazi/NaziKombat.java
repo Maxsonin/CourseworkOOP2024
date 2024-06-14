@@ -1,8 +1,9 @@
-package entitys.soviets;
+package entities.nazi;
 
 import bases.Base;
-import entitys.base.Kombat;
+import entities.base.Kombat;
 import main.GameWorld;
+import serialization.SerializationFile;
 import utils.SD;
 import utils.Vector2;
 
@@ -10,22 +11,32 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SovietKombat extends Kombat {
+public class NaziKombat extends Kombat {
 
-    public SovietKombat(Vector2<Double> position) {
+    public NaziKombat(Vector2<Double> position) {
         super(position);
-        initializeEntityImgSettings("soviet/entities/kombat.png", 0.7);
-        initializeBaseStats(0.2, 30, 35, 1000);
+        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
+        initializeBaseStats(0.2, 40, 50, 2500);
         initializeSquadLeaderStats(20, 25);
         initializeKombatStats(10, 25);
     }
 
-    public SovietKombat(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+    public NaziKombat(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
         this.setID(id);
-        initializeEntityImgSettings("soviet/entities/kombat.png", 0.7);
-        initializeBaseStats(velocity, damage, 35, 1000);
+        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
+        initializeBaseStats(velocity, damage, 50, 2500);
         getControllableComponent().setControllable(isControllable);
+    }
+
+    public NaziKombat(SerializationFile.EntityFields entityFields) {
+        super(entityFields.position);
+        setID(entityFields.ID);
+        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
+        initializeBaseStats(0.2, 40, 50, 2500);
+        getControllableComponent().setControllable(entityFields.isControllable);
+        getHealthStatsComponent().setHealth(entityFields.health);
+        setNeedToGoToTargetBase(entityFields.needToGoToTargetBase);
     }
 
     @Override
@@ -90,7 +101,7 @@ public class SovietKombat extends Kombat {
             move(gameWorld);
         }
 
-        Shoot(gameWorld, SD.Nazi);
+        Shoot(gameWorld, SD.Soviet);
 
         // Set to orignal Values after base modification of entity
         setVelocity(0.2);

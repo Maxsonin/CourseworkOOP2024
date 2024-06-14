@@ -1,9 +1,10 @@
 // Class that imitates array with only two numeric values: x and y
 package utils;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Cloneable{
+public class Vector2<T extends Number> implements Comparable<Vector2<T>>, Cloneable, Serializable {
     private T x; private T y;
 
     public Vector2(T x, T y) {

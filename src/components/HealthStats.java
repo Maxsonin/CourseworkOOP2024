@@ -1,11 +1,12 @@
 package components;
 
-import entitys.Entity;
+import entities.Entity;
 import utils.Vector2;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class HealthStats {
+public class HealthStats implements Serializable {
     private Entity parentObj;
 
     private final int maxHealth;

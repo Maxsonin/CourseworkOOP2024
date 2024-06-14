@@ -3,9 +3,11 @@
 package inputs;
 
 import dialogBoxes.CreateDialog;
-import entitys.base.Infantry;
+import entities.base.Infantry;
 import main.GameWorld;
 import map.Map;
+import serialization.Deserializer;
+import serialization.Serializer;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -63,6 +65,15 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_D:
                 map.moveViewRight(gameWorld);
                 break;
+        }
+
+        // Check for Ctrl+S to Serialize
+        if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0 && keyCode == KeyEvent.VK_S) {
+            Serializer.SerializeWithFileChooser(gameWorld);
+        }
+        // Check for Ctrl+S to Serialize
+        else if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0 && keyCode == KeyEvent.VK_L) {
+            Deserializer.DeserializeWithFileChooser(gameWorld);
         }
     }
 

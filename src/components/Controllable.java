@@ -2,13 +2,14 @@
 
 package components;
 
-import entitys.Entity;
+import entities.Entity;
 import utils.Vector2;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
-public class Controllable {
+public class Controllable implements Serializable {
     private Entity parentObj;
     private boolean isControllable = false;
 

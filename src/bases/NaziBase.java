@@ -1,5 +1,6 @@
 package bases;
 
+import serialization.SerializationFile;
 import utils.Loader;
 import utils.Vector2;
 

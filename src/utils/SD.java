@@ -38,7 +38,7 @@ public class SD {
 
     // Types of Entities
     public static final String Infantry = "Infantry";
-    public static final String SquadLeader = "Squad Leader";
+    public static final String SquadLeader = "SquadLeader";
     public static final String Kombat = "Kombat";
 
     // Require Manual input

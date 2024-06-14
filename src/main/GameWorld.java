@@ -4,13 +4,13 @@ import bases.Base;
 import bases.CapturePoint;
 import bases.NaziBase;
 import bases.SovietBase;
-import entitys.base.Infantry;
-import entitys.nazi.NaziInfantry;
-import entitys.nazi.NaziKombat;
-import entitys.nazi.NaziSquadLeader;
-import entitys.soviets.SovietInfantry;
-import entitys.soviets.SovietKombat;
-import entitys.soviets.SovietSquadLeader;
+import entities.base.Infantry;
+import entities.nazi.NaziInfantry;
+import entities.nazi.NaziKombat;
+import entities.nazi.NaziSquadLeader;
+import entities.soviets.SovietInfantry;
+import entities.soviets.SovietKombat;
+import entities.soviets.SovietSquadLeader;
 import utils.SD;
 import utils.Vector2;
 import map.Map;
@@ -18,6 +18,7 @@ import map.Map;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class GameWorld
 {
@@ -62,6 +63,8 @@ public class GameWorld
 
     // Getters&Setters
     public Map getMap() { return map; }
+    public void setBases(ArrayList<Base> bases) { this.bases = bases; }
+    public void setEntities(ArrayList<Infantry> entities) { this.entities = entities; }
     public ArrayList<Base> getBases() { return bases; }
     public ArrayList<Infantry> getEntities() { return entities; }
     public ArrayList<Infantry> getEntitiesThatAreInBase() {
@@ -151,6 +154,11 @@ public class GameWorld
                     entity.setTarget(getBaseByName(SD.MainNaziBase));
                 }
             }
+            else {
+                Random random = new Random();
+                entity.setTarget(bases.get(random.nextInt(bases.size())));
+                entity.setNeedToAttack(true);
+            }
         }
     }
 
@@ -185,7 +193,7 @@ public class GameWorld
         }
     }
 
-    public void render(Graphics g) { // Requirement №10 Dynamic Polymorphism
+    public void render(Graphics g) { // Requirement №10
         map.draw(g);
 
         for (var base : bases) {

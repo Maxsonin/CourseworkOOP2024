@@ -1,8 +1,9 @@
-package entitys.soviets;
+package entities.soviets;
 
 import bases.Base;
-import entitys.base.Infantry;
+import entities.base.Kombat;
 import main.GameWorld;
+import serialization.SerializationFile;
 import utils.SD;
 import utils.Vector2;
 
@@ -10,19 +11,32 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SovietInfantry extends Infantry {
-    public SovietInfantry(Vector2<Double> position) {
+public class SovietKombat extends Kombat {
+
+    public SovietKombat(Vector2<Double> position) {
         super(position);
-        initializeEntityImgSettings("soviet/entities/infantry.png", 0.7);
-        initializeBaseStats(0.5, 15, 100, 1000);
+        initializeEntityImgSettings("soviet/entities/kombat.png", 0.7);
+        initializeBaseStats(0.2, 30, 35, 1000);
+        initializeSquadLeaderStats(20, 25);
+        initializeKombatStats(10, 25);
     }
-    // Requirement №11 Static Polymorphism
-    public SovietInfantry(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+
+    public SovietKombat(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
         this.setID(id);
-        initializeEntityImgSettings("soviet/entities/infantry.png", 0.7);
-        initializeBaseStats(velocity, damage, 100, 500);
+        initializeEntityImgSettings("soviet/entities/kombat.png", 0.7);
+        initializeBaseStats(velocity, damage, 35, 1000);
         getControllableComponent().setControllable(isControllable);
+    }
+
+    public SovietKombat(SerializationFile.EntityFields entityFields) {
+        super(entityFields.position);
+        setID(entityFields.ID);
+        initializeEntityImgSettings("soviet/entities/kombat.png", 0.7);
+        initializeBaseStats(0.2, 30, 35, 1000);
+        getControllableComponent().setControllable(entityFields.isControllable);
+        getHealthStatsComponent().setHealth(entityFields.health);
+        setNeedToGoToTargetBase(entityFields.needToGoToTargetBase);
     }
 
     @Override
@@ -67,19 +81,6 @@ public class SovietInfantry extends Infantry {
     }
 
     @Override
-    public void update(GameWorld gameWorld) {
-        if (!getControllableComponent().isControllable()) {
-            move(gameWorld);
-        }
-
-        Shoot(gameWorld, SD.Nazi);
-
-        // Set to original Values after base modification of entity // for Requirement №17
-        setVelocity(0.5);
-        getHealthStatsComponent().setBarColor(Color.green);
-    }
-
-    @Override
     public void draw(Graphics g) {
         drawImg(g);
         healthStatsComponent.drawHealthStats(g);
@@ -95,13 +96,15 @@ public class SovietInfantry extends Infantry {
     }
 
     @Override
-    public String toString() {
-        return "SovietInfantry{" +
-                "needToAttack=" + needToAttack +
-                ", target=" + target +
-                ", damage=" + damage +
-                ", ID='" + ID + '\'' +
-                ", velocity=" + velocity +
-                '}';
+    public void update(GameWorld gameWorld) {
+        if (!getControllableComponent().isControllable()) {
+            move(gameWorld);
+        }
+
+        Shoot(gameWorld, SD.Nazi);
+
+        // Set to orignal Values after base modification of entity
+        setVelocity(0.2);
+        getHealthStatsComponent().setBarColor(Color.green);
     }
 }

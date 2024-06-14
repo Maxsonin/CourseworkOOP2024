@@ -1,7 +1,7 @@
 package dialogBoxes;
 
 import bases.Base;
-import entitys.base.Infantry;
+import entities.base.Infantry;
 import main.GameWorld;
 import utils.SD;
 

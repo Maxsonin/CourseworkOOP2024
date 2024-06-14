@@ -1,13 +1,10 @@
 package bases;
 
-import entitys.base.Infantry;
 import utils.Loader;
 import utils.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class CapturePoint extends Base {
     public CapturePoint(Vector2<Double> position, String fileName) {

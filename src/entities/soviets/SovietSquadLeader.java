@@ -1,8 +1,9 @@
-package entitys.nazi;
+package entities.soviets;
 
 import bases.Base;
-import entitys.base.Kombat;
+import entities.base.SquadLeader;
 import main.GameWorld;
+import serialization.SerializationFile;
 import utils.SD;
 import utils.Vector2;
 
@@ -10,22 +11,30 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class NaziKombat extends Kombat {
-
-    public NaziKombat(Vector2<Double> position) {
+public class SovietSquadLeader extends SquadLeader {
+    public SovietSquadLeader(Vector2<Double> position) {
         super(position);
-        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
-        initializeBaseStats(0.2, 40, 50, 2500);
+        initializeEntityImgSettings("soviet/entities/squadLeader.png", 0.7);
+        initializeBaseStats(0.3, 20, 150, 1000);
         initializeSquadLeaderStats(20, 25);
-        initializeKombatStats(10, 25);
     }
 
-    public NaziKombat(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
+    public SovietSquadLeader(String id, boolean isControllable, Vector2<Double> position, double velocity, int damage) {
         super(position);
         this.setID(id);
-        initializeEntityImgSettings("nazi/entities/kombat.png", 1);
-        initializeBaseStats(velocity, damage, 50, 2500);
+        initializeEntityImgSettings("soviet/entities/squadLeader.png", 0.7);
+        initializeBaseStats(velocity, damage, 150, 1000);
         getControllableComponent().setControllable(isControllable);
+    }
+
+    public SovietSquadLeader(SerializationFile.EntityFields entityFields) {
+        super(entityFields.position);
+        setID(entityFields.ID);
+        initializeEntityImgSettings("soviet/entities/squadLeader.png", 0.7);
+        initializeBaseStats(0.3, 20, 150, 1000);
+        getControllableComponent().setControllable(entityFields.isControllable);
+        getHealthStatsComponent().setHealth(entityFields.health);
+        setNeedToGoToTargetBase(entityFields.needToGoToTargetBase);
     }
 
     @Override
@@ -90,10 +99,10 @@ public class NaziKombat extends Kombat {
             move(gameWorld);
         }
 
-        Shoot(gameWorld, SD.Soviet);
+        Shoot(gameWorld, SD.Nazi);
 
         // Set to orignal Values after base modification of entity
-        setVelocity(0.2);
+        setVelocity(0.3);
         getHealthStatsComponent().setBarColor(Color.green);
     }
 }

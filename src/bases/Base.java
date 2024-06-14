@@ -1,6 +1,6 @@
 package bases;
 
-import entitys.base.Infantry;
+import entities.base.Infantry;
 import utils.Vector2;
 
 import java.awt.*;
@@ -44,6 +44,7 @@ public abstract class Base {
     public int getBaseCapacity() {
         return baseCapacity;
     }
+    public Color getColor() { return color; }
 
     public void drawImg(Graphics g) {
         double scaledWidth = img.getWidth() * scaleFactor;
